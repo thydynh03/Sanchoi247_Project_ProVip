@@ -14,6 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class ScheduleBooking {
+   
     private int booking_id;
     private San san;
     private LocalTime start_time; // Use LocalTime instead of LocalDateTime

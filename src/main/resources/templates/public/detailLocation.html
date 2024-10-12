@@ -86,15 +86,21 @@
                         // Populate the table with the new bookings
                         data.forEach(booking => {
                             let editLink = ' ';
-
+                            let bookLink = ' ';
                             // Check if user can edit (do this check with JavaScript if data is available on the client-side)
-
+                            if (booking.status === "available") {
+                                bookLink = `<a href="/bookSan/${booking.booking_id}">Book</a>`;
+                            } else {
+                                // bookLink = `<a href="/Login">Book</a>`;
+                                bookLink = "  ";
+                            }
                             if ((sessionUser === sanDetailUser)) {
                                 editLink = `<a href="/editBooking/${booking.booking_id}">Edit</a>`;
                             } else {
-                                editLink = " ";
+                                editLink = "  ";
                             }
-
+                           
+                           
 
 
                             var row = `<tr>
@@ -102,7 +108,7 @@
                             <td>${booking.end_time}</td>
                             <td>${booking.status}</td>
                             <td>${booking.price}</td>
-                            <td>Book</td>
+                            <td>${bookLink}</td>
                             <td>${editLink}</td>
                             </tr>`;
 

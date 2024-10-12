@@ -38,7 +38,7 @@ public class ScheduleBookingRepo {
     
             while (rs.next()) {
                 // Chỉ cần lấy những thông tin cần thiết
-                int booking_id = rs.getInt("booking_id");
+                int booking_id = rs.getInt("Sbooking_id");
                 LocalTime start_time = rs.getTime("start_time").toLocalTime();
                 LocalTime end_time = rs.getTime("end_time").toLocalTime();
                 String status = rs.getString("status");
@@ -69,7 +69,7 @@ public class ScheduleBookingRepo {
             List<ScheduleBooking> bookings = new ArrayList<>();
     
             while (rs.next()) {
-                int booking_id = rs.getInt("booking_id");
+                int booking_id = rs.getInt("Sbooking_id");
                 LocalTime start_time = rs.getTime("start_time").toLocalTime(); // Fetch start_time
                 LocalTime end_time = rs.getTime("end_time").toLocalTime();     // Fetch end_time
                 String status = rs.getString("status");
@@ -85,12 +85,26 @@ public class ScheduleBookingRepo {
             return bookings;
         }
     }
+    public void updateScheduleBookingStatus(int sbid, String status) throws Exception {
+        Class.forName(Baseconnection.nameClass); // Load the database driver
+        String query = "UPDATE Schedulebooking SET status = ? WHERE Sbooking_id = ?";
+    
+        try (Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username, Baseconnection.password);
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, status);
+            ps.setInt(2, sbid);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Error updating schedule booking status", e);
+        }
+    }
     
     public ScheduleBooking findById(int bookingId) throws Exception {
         Class.forName(Baseconnection.nameClass); // Load the database driver
         try (Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username, Baseconnection.password)) {
             // SQL query to find a booking by ID
-            String query = "SELECT * FROM Schedulebooking WHERE booking_id = ?";
+            String query = "SELECT * FROM Schedulebooking WHERE Sbooking_id = ?";
             ScheduleBooking booking = null;
     
             try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -98,7 +112,7 @@ public class ScheduleBookingRepo {
                 ResultSet rs = ps.executeQuery();
     
                 if (rs.next()) {
-                    int booking_id = rs.getInt("booking_id");
+                    int booking_id = rs.getInt("Sbooking_id");
                     LocalTime start_time = rs.getTime("start_time").toLocalTime(); // Fetch start_time
                     LocalTime end_time = rs.getTime("end_time").toLocalTime();     // Fetch end_time
                     String status = rs.getString("status");
@@ -122,7 +136,7 @@ public class ScheduleBookingRepo {
 
     public void update(ScheduleBooking booking) throws Exception {
         // Database connection and query
-        String query = "UPDATE Schedulebooking SET start_time = ?, end_time = ?, status = ?, price = ?, booking_date = ? WHERE booking_id = ?";
+        String query = "UPDATE Schedulebooking SET start_time = ?, end_time = ?, status = ?, price = ?, booking_date = ? WHERE Sbooking_id = ?";
         Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
         Baseconnection.password); // Establish connection
         try (PreparedStatement ps = con.prepareStatement(query)) {
