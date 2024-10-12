@@ -363,7 +363,10 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
-                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role == 'C' }"><a class="dropdown-item" href="#">See Stadium</a></li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role == 'C'}">
+                                <a class="dropdown-item" href="#">See Stadium</a> 
+                            </li>
+                            <!-- deo hieu sao khong hien ra see stadium -->
                             <li><a class="dropdown-item" href="#">See Booking</a></li>
                             <li><a class="dropdown-item" href="#">Help & Support</a></li>
                             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Give Feedback</a></li>
@@ -449,8 +452,10 @@
             <!-- Button cho từng bộ môn -->
             <div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-duration="1000">
                 <button class="sport-btn">
+                    <a th:href="@{/searchResult}" style="text-decoration: none;">
                     <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728239528/zb8wksavi0mpyyzkjhd2.png" alt="FOOTBALL" class="icon-img">
                     <p>FOOTBALL</p>
+                    </a>
                 </button>
             </div>
             <div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-duration="1000">

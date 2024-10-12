@@ -353,6 +353,11 @@
             font-size: 14px;
             color: #666;
         }
+        .banner-video-1{
+            width: 100%;
+            height: auto;
+        }
+
     </style>
 </head>
 <body>
@@ -421,40 +426,95 @@
         </div>
     </nav>
 
+    <!-- Banner Video -->
+    <div class="video-container">
+        <video class="banner-video-1" autoplay loop muted playsinline>
+            <source src="https://res.cloudinary.com/dvwn7bgut/video/upload/v1728236168/3519565915-preview_ssdknu.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
 
-    <!-- Nội dung trang kết quả tìm kiếm -->
+    <!-- Enlarged Search Bar with Margins -->
+    <div class="container mt-5 mb-5" data-aos="fade-up" data-aos-duration="1000">
+        <div class="card" style="background-color: #ebf0ed; border: none;">
+            <div class="card-body">
+                <form class="row g-3" th:action="@{/SearchSanByTenSan}" method="post">
+                    <div class="col-md-3">
+                        <input type="text" name="Search" class="form-control form-control-lg" placeholder="Name" aria-label="Name" style="height: 55px;">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="Location" class="form-control form-control-lg" placeholder="Location" aria-label="Location" style="height: 55px;">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select form-select-lg" name="SportType" aria-label="Loại thể thao" style="height: 55px;">
+                            <option selected>Type</option>
+                            <option value="1">Football</option>
+                            <option value="2">Tennis</option>
+                            <option value="3">Pickleball</option>
+                            <option value="4">Basketball</option>
+                            <option value="5">Volleyball</option>
+                            <option value="6">Table Tennis</option>
+                            <option value="7">Golf</option>
+                            <option value="8">Badminton</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 d-grid">
+                        <button type="submit" class="btn" style="background-color: #759C83; color: white; height: 55px; font-size: 18px;">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-        <div th:each="San : ${userList}" class="col-md-4 mb-4">
-            <div class="card">
-                <div th:id="'carouselExample' + ${San.uid}" class="carousel slide card-img-top" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img th:src="${San.img_san1}" style="height: 265px;" class="d-block w-100" alt="..."/>
-                        </div>
-                        <div class="carousel-item">
-                            <img th:src="${San.img_san2}" style="height: 265px;" class="d-block w-100" alt="..."/>
-                        </div>
-                        <div class="carousel-item">
-                            <img th:src="${San.img_san3}" style="height: 265px;" class="d-block w-100" alt="..."/>
-                        </div>
-                        <div class="carousel-item">
-                            <img th:src="${San.img_san4}" style="height: 265px;" class="d-block w-100" alt="..."/>
-                        </div>
-                        <div class="carousel-item">
-                            <img th:src="${San.img_san5}" style="height: 265px;" class="d-block w-100" alt="..."/>
+    <div class="container mt-5">
+        <div class="card" style="background-color: #ebf0ed; border: none;">
+            <div class="card-body">
+    
+                <!-- Hiển thị thông báo nếu không tìm thấy sân -->
+                <div style="background-color: #759C83; color: white;" th:if="${message}" class="alert alert-warning" role="alert">
+                    <span th:text="${message}"></span>
+                </div>
+    
+                <!-- Hiển thị danh sách sân tìm thấy -->
+                <div class="row" th:if="${userList != null}">
+                    <div th:each="San : ${userList}" class="col-md-4 mb-4">
+                        <div class="card">
+                            <div th:id="'carouselExample' + ${San.uid}" class="carousel slide card-img-top" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img th:src="${San.img_san1}" style="height: 265px;" class="d-block w-100" alt="..."/>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img th:src="${San.img_san2}" style="height: 265px;" class="d-block w-100" alt="..."/>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img th:src="${San.img_san3}" style="height: 265px;" class="d-block w-100" alt="..."/>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img th:src="${San.img_san4}" style="height: 265px;" class="d-block w-100" alt="..."/>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img th:src="${San.img_san5}" style="height: 265px;" class="d-block w-100" alt="..."/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body" style="background-color: #ebf0ed;">
+                                <h5 class="card-title" th:text="${San.ten_san}">Card title</h5>
+                                <p class="card-text">
+                                    <i class="fas fa-map-marker-alt location-icon"></i>
+                                    <span th:text="${San.address}">Address here</span>
+                                </p>
+                                <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn" style="background-color: #759C83; color: white; border: none;">View</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body" style="background-color: #ebf0ed;">
-                    <h5 class="card-title" th:text="${San.ten_san}">Card title</h5>
-                    <p class="card-text">
-                        <i class="fas fa-map-marker-alt location-icon"></i>
-                        <span th:text="${San.address}">Address here</span>
-                    </p>
-                    <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn" style="background-color: #759C83; color: white; border: none;">View</a>
-                </div>
+    
             </div>
         </div>
+    </div>
+    
+        
 
         <footer class="footerComponent-footer">
             <div class="footerComponent-container">
