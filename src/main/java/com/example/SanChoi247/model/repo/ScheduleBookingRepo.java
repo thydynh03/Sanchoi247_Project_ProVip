@@ -89,7 +89,7 @@ public class ScheduleBookingRepo {
             return bookings;
         }
     }
-
+    
     public ScheduleBooking findById(int bookingId) throws Exception {
         Class.forName(Baseconnection.nameClass); // Load the database driver
         try (Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
@@ -127,7 +127,7 @@ public class ScheduleBookingRepo {
 
     public void update(ScheduleBooking booking) throws Exception {
         // Database connection and query
-        String query = "UPDATE Schedulebooking SET start_time = ?, end_time = ?, status = ?, price = ?, booking_date = ? WHERE booking_id = ?";
+        String query = "UPDATE Schedulebooking SET start_time = ?, end_time = ?, status = ?, price = ?, booking_date = ? WHERE Sbooking_id = ?";
         Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
                 Baseconnection.password); // Establish connection
         try (PreparedStatement ps = con.prepareStatement(query)) {
