@@ -1,0 +1,486 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SanChoi247</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .location-icon {
+            color: #759C83; /* Màu sắc */
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+            vertical-align: middle; /* Căn chỉnh biểu tượng với văn bản */
+            font-size: 1.2em; /* Kích thước biểu tượng */
+        }
+
+
+        .navbar-custom {
+            background-color: #ebf0ed;
+            padding: 20px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 10px 20px;
+            font-weight: 500;   
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .navbar-custom {
+            background-color: #ebf0ed;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 10px 20px;
+            font-weight: 500;   
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu .dropdown-item {
+            font-size: 18px;
+            font-weight: 500;
+            color: #759C83;
+            padding: 15px 20px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1;
+            color: #759C83;
+            transform: translateY(-2px);
+        }
+
+        .dropdown-item.logout {
+            color: red;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #759C83; /* Change color on hover */
+            transform: translateY(-2px); /* Move up slightly on hover */
+        }
+
+        .navbar-brand img {
+            height: 60px;
+            width: 60px; /* Đảm bảo chiều rộng bằng chiều cao */
+            border-radius: 50%; /* Đặt border-radius thành 50% để tạo hình tròn */
+        }
+        .sports-dropdown .dropdown-menu {
+            display: none; /* Ẩn menu xổ xuống mặc định */
+        }
+
+        .sports-dropdown:hover .dropdown-menu {
+            display: block; /* Hiện menu khi rê chuột vào mục SPORTS */
+        }
+
+
+        .navbar-brand {
+            margin-right: auto;
+        }
+
+        .navbar-toggler {
+            border-color: #000;
+            padding: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        /* Các tùy chọn trong dropdown */
+        .dropdown-menu .dropdown-item {
+            font-size: 18px; /* Tăng kích thước chữ */
+            font-weight: 500; /* Làm cho chữ đậm */
+            color: #333; /* Màu chữ */
+            padding: 15px 20px; /* Tăng khoảng cách padding */
+        }
+
+        /* Thay đổi khi người dùng di chuột vào */
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1; /* Màu nền khi hover */
+            color: #000; /* Màu chữ khi hover */
+        }
+
+        /* Tùy chọn thêm màu sắc đặc biệt cho nút đăng xuất */
+        .dropdown-item.logout {
+            color: red; /* Làm cho chữ đăng xuất có màu đỏ */
+            font-weight: bold; /* Tăng độ đậm chữ */
+        }
+        .footerComponent-footer {
+            background-color: #759C83; /* Màu nền đỏ */
+            color: #ffffff; /* Màu chữ trắng */
+            padding: 20px 0;
+        }
+
+        .footerComponent-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .footerComponent-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .footerComponent-col {
+            flex: 1;
+            padding: 10px;
+            margin: 10px; /* Căn lề cho từng cột */
+            transition: transform 0.3s ease; /* Thêm hiệu ứng chuyển động */
+        }
+
+        .footerComponent-col:hover {
+            transform: translateY(-5px); /* Đẩy lên 5px khi hover */
+        }
+
+        .footerComponent-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #759C83; /* Gạch dưới màu vàng */
+            padding-bottom: 5px; /* Khoảng cách giữa tiêu đề và gạch dưới */
+        }
+
+        .footerComponent-col ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .footerComponent-col ul li {
+            margin-bottom: 5px;
+        }
+
+        .footerComponent-col ul li a {
+            color: #ffffff; /* Màu chữ trắng cho liên kết */
+            text-decoration: none; /* Bỏ gạch chân */
+            transition: color 0.3s ease; /* Thêm hiệu ứng cho màu */
+        }
+
+        .footerComponent-col ul li a:hover {
+            color: #759C83; /* Chuyển thành màu vàng khi hover */
+        }
+
+        .map-container {
+            margin-top: 10px;
+        }
+
+        .footerComponent-text-center {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Thêm biểu tượng Font Awesome */
+        .fas, .fab {
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+        }
+        /* The container for the image and text */
+        .overlay-container {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        /* The image itself */
+        .background-image {
+            width: 100%;
+            height: auto;
+        }
+
+        /* The text overlay (adjust position as needed) */
+        .overlay-text {
+            position: absolute;
+            top: 45%; /* Adjust this value to control vertical alignment */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+
+        }
+
+        /* Customize the text appearance */
+        .overlay-text h1 {
+            font-size: 50px;
+            margin-bottom: 50px;
+            border-bottom: 2px solid #759C83; /* Underline effect */
+            display: inline-block; /* Make the underline shorter */
+            padding-bottom: 10px; /* Optional: Adjust the space between text and the underline */
+        }
+
+
+        .overlay-text p {
+            font-size: 18px;
+            width: 70%; /* Adjust width for paragraph text */
+            margin: 0 auto;
+        }
+        .features-section {
+            background-color: #f5f5f5;
+            padding: 50px 0;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: #2d2d2d;
+            border-bottom: 3px solid #759C83;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: #fff;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: auto;
+            float: left;
+            margin-right: 15px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card-text {
+            font-size: 16px;
+            color: #666;
+        }
+
+    </style>
+</head>
+<body style="padding-top: 56px;">
+    <!-- Sticky Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">
+                <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728240612/nptm9pv1ifhzdrogjfk8.webp" alt="Logo"> <!-- Replace with your logo URL -->
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">HOME</a>
+                    </li>
+                    <li class="nav-item dropdown sports-dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="sportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            SPORTS
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sportsDropdown">
+                            <li><a class="dropdown-item" href="#">FOOTBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">PICKLEBALL</a></li>
+                            <li><a class="dropdown-item" href="#">BASKETBALL</a></li>
+                            <li><a class="dropdown-item" href="#">VOLLEYBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TABLE TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">GOLF</a></li>
+                            <li><a class="dropdown-item" href="#">BADMINTON</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/ShowIntroduction}">INTRODUCTION</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">POLICY</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">TERMS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/ShowForOwners}">FOR OWNERS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">BLOG</a>
+                    </li>
+                    <li th:if="${session.UserAfterLogin == null}" class="nav-item">
+                        <a class="nav-link" th:href="@{/Login}">SIGN IN</a>
+                    </li>
+                    <!-- User avatar and dropdown -->
+                    <li th:if="${session.UserAfterLogin != null}" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img th:src="${session.UserAfterLogin.avatar}" alt="Avatar" class="avatar"> <!-- Avatar from session -->
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Help & Support</a></li>
+                            <li><a class="dropdown-item" href="#">Give Feedback</a></li>
+                            <li><a class="dropdown-item" th:href="@{/Logout}" style="color: #759C83;">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="overlay-container">
+        <!-- The background image -->
+        <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728877437/vtyn3ui1usupxm8gdnix.png" alt="Background" class="background-image">
+    
+        <!-- The text overlay -->
+        <div class="overlay-text">
+            <h1>SANCHOI247</h1>
+            <p>
+                Our application is specially designed to simplify the booking and management of badminton, football, and tennis courts.
+                With a user-friendly interface, you can easily create, manage, and track bookings, saving time and improving customer satisfaction.
+            </p>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <div class="container text-center">
+            <h1 class="section-title">Features of sanchoi247 - Management Software</h1>
+            <p class="section-description">Managing your sports fields for badminton, football, and tennis has never been easier. Take advantage of sanchoi247's features and conveniences to enhance business efficiency, improve customer satisfaction, and achieve success in your business.</p>
+            
+            <div class="row mt-5">
+                <!-- Card 1 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-left">
+                            <img src="calendar-icon.png" alt="Calendar" class="feature-icon">
+                            <h4 class="card-title">View Field Status</h4>
+                            <p class="card-text">sanchoi247 helps you manage your sports fields for badminton, football, and tennis. Owners can view which fields are available or booked, resolve bookings easily, and monitor schedules efficiently.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-left">
+                            <img src="booking-icon.png" alt="Booking" class="feature-icon">
+                            <h4 class="card-title">Manage Bookings</h4>
+                            <p class="card-text">sanchoi247 provides booking management features with flexibility in daily or monthly scheduling. Track and approve bookings, and automate reminders to save time for both customers and business owners.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- You can add more rows and cards as needed -->
+        </div>
+    </div>
+    
+
+    <footer class="footerComponent-footer">
+        <div class="footerComponent-container">
+            <div class="footerComponent-row">
+                <div class="footerComponent-col">
+                    <h5 class="footerComponent-title">CONTACT US</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Khu đô thị FPT City, Ngũ Hành Sơn, Đà Nẵng, Việt Nam</li>
+                        <li><i class="fas fa-phone"></i> 0987 689 426</li>
+                        <li><i class="fas fa-envelope"></i>anndb1930@gmail.com</li>
+                        <li><i class="fab fa-facebook"></i> <a href="https://www.facebook.com/profile.php?id=100023316487779" target="_blank">Facebook</a></li>
+                        <li><i class="fas fa-comment"></i> <a href="https://zalo.me/0829508327" target="_blank">Zalo</a></li>
+                    </ul>
+                </div>
+                <div class="footerComponent-col">
+                    <h5 class="footerComponent-title">QUICK LINKS</h5>
+                    <ul>
+                        <li><a class="nav-item" th:href="@{/}">Home</a></li>
+                        <li><a href="#football">Football</a></li>
+                        <li><a href="#tennis">Tennis</a></li>
+                        <li><a href="#pickleball">Pickleball</a></li>
+                        <li><a href="#basketball">Basketball</a></li>
+                        <li><a href="#volleyball">Volleyball</a></li>
+                        <li><a href="#table-tennis">Table Tennis</a></li>
+                        <li><a href="#golf">Golf</a></li>
+                        <li><a href="#badminton">Badminton</a></li>
+                    </ul>
+                </div>
+                <div class="footerComponent-col">
+                    <h5 class="footerComponent-title">BENEFITS</h5>
+                    <ul>
+                        <li>Online Booking</li>
+                        <li>Quickly</li>
+                        <li>Good Price</li>
+                        <li>Convenient</li>
+                    </ul>
+                </div>
+                <div class="footerComponent-col">
+                    <h5></h5>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.999999999999!2d108.2583164!3d15.968891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142116949840599:0x365b35580f52e8d5!2zREkgR8OgbmggRk9PVCBEdW5n!5e0!3m2!1svi!2s!4v1600000000000!5m2!1svi!2s" 
+                        width="400px" height="300px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footerComponent-text-center">
+            <p>SanChoi247 © 2024 - Made by Nguyễn Đình Bảo Ân</p>
+        </div>
+    </footer>
+
+    <!-- Bản đồ -->
+    <div class="map">
+        <!-- Bạn có thể chèn Google Map hoặc hình ảnh ở đây -->
+    </div>
+
+    <!-- Copyright -->
+    <div class="copyright">
+        SanChoi247 - Made by Nguyễn Đình Bảo Ân 
+    </div>
+    
+    <script>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Cuộn mượt mà
+            });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init(); // Khởi tạo thư viện AOS
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.popular-item');
+            const loadMoreButton = document.getElementById('loadMore');
+            let currentlyVisible = 6;
+    
+            // Initially hide items beyond the first 6
+            items.forEach((item, index) => {
+                if (index >= currentlyVisible) {
+                    item.style.display = 'none';
+                }
+            });
+    
+            loadMoreButton.addEventListener('click', () => {
+                const hiddenItems = Array.from(items).filter(item => item.style.display === 'none');
+                hiddenItems.slice(0, 6).forEach(item => {
+                    item.style.display = 'block';
+                });
+    
+                if (hiddenItems.length <= 6) {
+                    loadMoreButton.style.display = 'none'; // Hide button if no more items to show
+                }
+            });
+        });
+    </script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

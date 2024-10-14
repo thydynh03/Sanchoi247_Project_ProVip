@@ -12,6 +12,7 @@ import com.example.SanChoi247.model.repo.UserRepo;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 @Controller
 public class UserController {
@@ -187,4 +188,7 @@ public class UserController {
         }
         return "auth/verifyEmail";
     }
+
+    // ---------------------------------------------------------------------------------//
+    
 }

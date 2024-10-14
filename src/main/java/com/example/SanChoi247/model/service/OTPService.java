@@ -1,45 +1,36 @@
-// package com.example.SanChoi247.model.service;
+package com.example.SanChoi247.model.service;
 
-// import org.jboss.aerogear.security.otp.Totp;
-// import org.jboss.aerogear.security.otp.api.Clock;
-// import org.springframework.beans.factory.annotation.Value;
-// import org.springframework.stereotype.Service;
+import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
 
-// @Service
-// public class OTPService {
-//     private final int timeWindow;
+import org.springframework.stereotype.Service;
 
-//     public OTPService(@Value("${OTP_TIME_WINDOW_MINUTES}") double timeWindow) {
-//         timeWindow *= 60; // Convert minutes to seconds
-//         if (timeWindow < 45) {
-//             this.timeWindow = 45;
-//         } else if (timeWindow > 180) {
-//             this.timeWindow = 180;
-//         } else {
-//             this.timeWindow = (int) timeWindow;
-//         }
+@Service
+public class OtpService {
 
-//     }
+    private final Map<String, String> otpStore = new HashMap<>();
+    private final SecureRandom random = new SecureRandom();
 
-//     public String generateOTP(String secretKey) {
-//         try {
-//             Clock clock = new Clock(timeWindow); // Or use a synchronized clock in production
-//             Totp totp = new Totp(secretKey, clock);
-//             return totp.now();
-//         } catch (Exception e) {
-//             // Handle exceptions appropriately (e.g., log, throw custom exception)
-//             throw new RuntimeException("Error generating OTP", e); // Example
-//         }
-//     }
+    // Tạo mã OTP và lưu vào HashMap theo email
+    public String generateOtp(String email) {
+        String otp = String.format("%06d", random.nextInt(999999));
+        otpStore.put(email, otp);
+        return otp;
+    }
 
-//     public boolean validateOTP(String secretKey, String userOTP) {
-//         try {
-//             Clock clock = new Clock(timeWindow); // Or use a synchronized clock in production
-//             Totp totp = new Totp(secretKey, clock);
-//             return totp.verify(userOTP);
-//         } catch (Exception e) {
-//             // Handle exceptions appropriately (e.g., log, throw custom exception)
-//             throw new RuntimeException("Error validating OTP", e); // Example
-//         }
-//     }
-// }
+    // Kiểm tra OTP có khớp với email không
+    public boolean verifyOtp(String email, String otp) {
+        return otpStore.containsKey(email) && otpStore.get(email).equals(otp);
+    }
+
+    // Cập nhật mật khẩu người dùng (cần có logic thực tế để cập nhật vào database)
+    public boolean resetPassword(String email, String newPassword) {
+        // TODO: Thêm logic để cập nhật mật khẩu vào database (ví dụ, sử dụng UserRepository)
+        // Giả sử bạn có UserRepository để cập nhật thông tin người dùng
+        // User user = userRepository.findByEmail(email);
+        // user.setPassword(newPassword);  // Cần mã hóa mật khẩu trước khi lưu vào DB
+        // userRepository.save(user);
+        return true; // Trả về true nếu cập nhật mật khẩu thành công
+    }
+}

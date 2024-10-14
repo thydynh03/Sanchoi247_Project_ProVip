@@ -295,13 +295,13 @@
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0);   
             }
         }
     </style>
 </head>
 
-<body class="login-page">
+<body class="login-page" style="background-color: #f9f9f9;">
 <h2 class="navbar-brand">SanChoi247</h2>
 <div class="container" id="container">
     <div class="col-12">
@@ -342,7 +342,7 @@
                    required>
             <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Enter Password"
                    required>
-            <a th:href="@{/ResetPassword}">Forgot your password?</a>
+            <a th:href="@{/forgot-password}">Forgot your password?</a>
 
             <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
 

@@ -1,5 +1,4 @@
 package com.example.SanChoi247.config;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,19 +8,15 @@ import java.util.List;
 import java.util.Map;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-
 import org.springframework.stereotype.Component;
-
 @Component
 public class VNPayConfig {
     private static final String vnpHashSecret = "6FIZ3WHDN6SL2OTC3NGZ71FGW6HGCPKN";
     private static final String vnpTmnCode = "PA826OPP";
     private static final String vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     private static final String vnpReturnUrl = "http://localhost:8080/vnpay_return";
-
     public static String generateVnpayUrl(String orderId, String totalPrice) throws Exception {
         String vnp_TxnRef = VNPayConfig.getRandomAlphanumericString(64);
         Map<String, String> vnpParams = new HashMap<>();
@@ -36,15 +31,12 @@ public class VNPayConfig {
         double price = Double.parseDouble(totalPrice) * 100;
         vnpParams.put("vnp_Amount", String.valueOf((long) price)); // Convert to long to avoid decimals
         System.out.println("Amount: " + price);
-
         vnpParams.put("vnp_CurrCode", "VND");
         vnpParams.put("vnp_TxnRef", vnp_TxnRef);
         vnpParams.put("vnp_OrderInfo", URLEncoder.encode("Thanh toan san bong: " + orderId, "UTF-8"));
-
         vnpParams.put("vnp_Locale", "vn");
         vnpParams.put("vnp_ReturnUrl", vnpReturnUrl);
         vnpParams.put("vnp_CreateDate", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
-
         // Sort the parameters and build the query string
         // Sort the parameters and build the query string
         List<String> fieldNames = new ArrayList<>(vnpParams.keySet());
@@ -59,19 +51,14 @@ public class VNPayConfig {
             }
         }
         hashData.setLength(hashData.length() - 1); // Remove the last '&'
-
         query.setLength(query.length() - 1);
         System.out.println("Create Date: " + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
-
         // Create the HMAC SHA512 hash
         String vnpSecureHash = hmacSHA512(vnpHashSecret, hashData.toString());
-
         String paymentUrl = vnpUrl + "?" + query.toString() + "&vnp_SecureHash=" + vnpSecureHash;
         vnpParams.put("vnp_OrderInfo", "Thanh toan san bong: " + orderId);
-
         return paymentUrl;
     }
-
     public static String hmacSHA512(String key, String data) throws Exception {
         Mac hmac512 = Mac.getInstance("HmacSHA512");
         SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA512");
@@ -83,7 +70,6 @@ public class VNPayConfig {
         }
         return hash.toString();
     }
-
     public static String getRandomAlphanumericString(int len) {
         String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         SecureRandom rnd = new SecureRandom();

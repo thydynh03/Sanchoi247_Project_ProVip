@@ -17,6 +17,7 @@ import com.example.SanChoi247.model.entity.User;
 @Repository
 public class UserRepo {
     private static final String SIGN_UP_STATEMENT = "INSERT INTO users (uid, status) VALUES (?, ?);";
+    private static final User[] UserList = null;
 
     public ArrayList<User> getAllUser() throws Exception {
         ArrayList<User> UserList = new ArrayList<>();
@@ -445,5 +446,59 @@ public class UserRepo {
         ps.close();
         con.close();
         return exists;
+    }
+
+    public User findByEmail(String email) {
+        for (User user : UserList) {
+            if (user.getEmail().equalsIgnoreCase(email.trim())) {
+                return user;
+            }
+        }
+        // Trường hợp không tìm thấy email
+        System.out.println("Không tìm thấy email trong hệ thống: " + email);
+        return null;
+    }
+
+    // Cập nhật mật khẩu người dùng theo email từ danh sách userList
+    public int updatePasswordByEmail(String email, String encodedPassword) throws SQLException {
+        String query = "UPDATE users SET password = ? WHERE email = ?";
+
+        try (Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
+                Baseconnection.password);
+                PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, encodedPassword);
+            ps.setString(2, email);
+            return ps.executeUpdate(); // Trả về số hàng được cập nhật
+        }
+    }
+
+    public String getPasswordByEmail(String email) {
+        String encodedPassword = null;
+        String query = "SELECT password FROM users WHERE email = ?";
+
+        try (Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
+                Baseconnection.password);
+                PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    encodedPassword = rs.getString("password");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return encodedPassword; // Trả về mật khẩu mã hóa
+    }
+
+    public int updatePasswordInDatabase(String email, String encodedPassword) throws SQLException {
+        String query = "UPDATE users SET password = ? WHERE email = ?";
+        try (Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
+                Baseconnection.password);
+                PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, encodedPassword);
+            ps.setString(2, email);
+            return ps.executeUpdate();
+        }
     }
 }

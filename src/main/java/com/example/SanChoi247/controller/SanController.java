@@ -50,7 +50,6 @@ public class SanController {
     public List<ScheduleBooking> getBookingsByDate(
             @RequestParam("sanId") int sanId, 
             @RequestParam("bookingDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bookingDate) throws Exception {
-        
         List<ScheduleBooking> bookings = scheduleBookingRepo.getAvailableBookingsByDate(sanId, bookingDate);
         return bookings;
     }

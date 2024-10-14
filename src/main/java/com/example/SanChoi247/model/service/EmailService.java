@@ -1,90 +1,28 @@
-// package com.example.SanChoi247.model.service;
+package com.example.SanChoi247.model.service;
 
-// import java.io.UnsupportedEncodingException;
-// import java.util.concurrent.CompletableFuture;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.beans.factory.annotation.Value;
-// import org.springframework.mail.javamail.JavaMailSender;
-// import org.springframework.mail.javamail.MimeMessageHelper;
-// import org.springframework.stereotype.Service;
+@Service
+public class EmailService {
 
-// import jakarta.mail.MessagingException;
-// import jakarta.mail.internet.InternetAddress;
-// import jakarta.mail.internet.MimeMessage;
+    @Autowired
+    private JavaMailSender mailSender;
 
-// @Service
-// public class EmailService {
-//     @Autowired
-//     JavaMailSender mailSender;
-//     @Autowired
-//     String fromEmail;
-//     @Autowired
-//     String otpTimeWindowMinute;
+    public boolean sendOtpEmail(String email, String otp) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(email);
+            message.setSubject("Mã OTP của bạn");
+            message.setText("Mã OTP của bạn là: " + otp);
 
-//     public EmailService(JavaMailSender mailSender,
-//             @Value("${spring.mail.username}") String fromEmail,
-//             @Value("${OTP_TIME_WINDOW_MINUTES}") String otpTimeWindowMinute) {
-//         this.mailSender = mailSender;
-//         this.fromEmail = fromEmail;
-//         this.otpTimeWindowMinute = otpTimeWindowMinute;
-//     }
-
-//     public CompletableFuture<Void> sendEmail(String to, String subject, String body) {
-//         return CompletableFuture.runAsync(() -> {
-//             try {
-//                 MimeMessage message = mailSender.createMimeMessage();
-//                 MimeMessageHelper helper = new MimeMessageHelper(message);
-
-//                 helper.setFrom(new InternetAddress(fromEmail, "SANCHOI247 DO NOT REPLY"));
-//                 helper.setTo(to);
-//                 helper.setSubject(subject);
-//                 helper.setText(body, true);
-
-//                 mailSender.send(message);
-//             } catch (MessagingException | UnsupportedEncodingException e) {
-//                 // Handle the exception here
-//                 e.printStackTrace();
-//             }
-//         });
-//     }
-
-//     public CompletableFuture<Void> sendOTP(String email, String username, String otp) {
-//         return CompletableFuture.runAsync(() -> {
-//             try {
-//                 MimeMessage message = mailSender.createMimeMessage();
-//                 MimeMessageHelper helper = new MimeMessageHelper(message);
-
-//                 helper.setFrom(new InternetAddress(fromEmail, "SanChoi247 Account"));
-//                 helper.setTo(email);
-//                 helper.setSubject("SanChoi247 - OTP");
-
-//                 String content = "<html><body style='font-family: sans-serif;'>" +
-//                         "<h1 style='color: #007bff;'>SanChoi247 Account</h1>" +
-//                         "<p style='font-size: 16px;'>Hello " + username + ",</p>" +
-//                         "<p style='font-size: 16px;'>Please enter the following One Time Partner (OTP) to access your SanChoi247 account.</p>"
-//                         +
-//                         "<p style='font-size: 24px; font-weight: bold; color: #f00;'>" + otp + "</p>" +
-//                         "<p style='font-size: 16px;'>Your OTP remains valid only for " + otpTimeWindowMinute
-//                         + " minutes.</p>" +
-//                         "<p style='font-size: 16px;'>If you did not request this OTP, please ignore this email.</p>" +
-//                         "<p style='font-size: 16px;'>In case you forgot your username, it is: <strong style='color: #333;'>"
-//                         + username + "</strong></p>" +
-//                         "<p style='font-size: 16px;'>Thank you for using SanChoi247!</p>" +
-//                         "<p style='font-size: 14px; color: #777;'>This is an automated email, please do not reply to this email.</p>"
-//                         +
-//                         "<br>" +
-//                         "<p style='font-size: 12px; color: #555;'>(c) Copyright (c) 2024 SanChoi247. All rights reserved</p>"
-//                         +
-//                         "</body></html>";
-
-//                 helper.setText(content, true); // true indicates that the text is HTML
-
-//                 mailSender.send(message);
-//             } catch (MessagingException | UnsupportedEncodingException e) {
-//                 // Handle the exception here
-//                 e.printStackTrace();
-//             }
-//         });
-//     }
-// }
+            mailSender.send(message);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+}
