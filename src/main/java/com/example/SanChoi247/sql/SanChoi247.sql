@@ -59,6 +59,19 @@ CREATE TABLE Schedulebooking (
 
 
 
+CREATE TABLE Schedulebooking (
+    Sbooking_id INT AUTO_INCREMENT PRIMARY KEY,
+    san_id INT,
+    start_time TIME,
+    end_time TIME,
+    status VARCHAR(20), -- 'booked', 'available'
+    price float, -- Thêm trường giá tiền
+    FOREIGN KEY (san_id) REFERENCES san(san_id),
+    booking_date DATE
+);
+
+
+
 create table booking(
 	booking_id int auto_increment primary key,
     date timestamp,
@@ -67,6 +80,8 @@ create table booking(
     san_id int,
     foreign key (san_id) references san(san_id),
 	slot int,
+    Sbooking_id int,
+    foreign key (Sbooking_id) references Schedulebooking,
     Sbooking_id int,
     foreign key (Sbooking_id) references Schedulebooking,
     price double,
@@ -114,6 +129,7 @@ insert into users(name, dob, gender, phone, email, username, password, avatar,te
 ('Châu Thành Trung', '2004-02-02', 'M', '2222222222', 'concatre@gmail.com', 'd', 'd', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfA74jKoBCGxNadWXx6CI2uQiOrdOyh53LPQ&s','Sân bóng Chuyên Việt','98 Tiểu La, Hòa Thuận Đông, Hải Châu, Đà Nẵng', 'https://uyenuong.net/wp-content/uploads/2022/06/dien-tich-san-5-nguoi-3.jpg','https://www.tapdoanconhantao.com/wp-content/uploads/2019/07/thu-nhap-cao-nho-kinh-doanh-san-bong-da-co-nhan-tao.jpg','https://thegioiconhantao.com.vn/wp-content/uploads/2016/11/dien1.jpg','https://golfstore.vn/images/pro/1_3165.jpg','https://foba.vn/wp-content/uploads/2020/09/Hinh-anh-%E2%80%93-2020-Hoan-Thanh-Cong-Trinh-San-Bong-Binh-Thuan-1.jpg',0,'C'),
 ('Phạm Thanh Tùng', '2004-03-03', 'F', '3333333333', 'tung123@gmail.com', 'e', 'e', 'https://i.pinimg.com/550x/20/48/95/2048958ccc6ead899f8884a59d64ec72.jpg', null, null,null,null,null,null,null,0, 'U');
 select * from users;
+select * from users;
 insert into loaiSan(loai_san_type) values
 ('Sân Bóng Đá'),
 ('Sân Cầu Lông'),
@@ -134,6 +150,7 @@ insert into size(size) values
 INSERT INTO san (uid, loai_san_id, vi_tri_san, size_id, img, is_approve) VALUES
 (4, 1, '1A', 1, 'https://vecgroup.vn/upload_images/images/2021/12/09/kich-thuoc-san-bong-11-nguoi(1).png', 1),
 (4, 1, '1B', 1, 'https://vecgroup.vn/upload_images/images/2021/12/09/kich-thuoc-san-bong-11-nguoi(1).png', 1),
+
 
 (4, 1, '1C', 1, 'https://vecgroup.vn/upload_images/images/2021/12/09/kich-thuoc-san-bong-11-nguoi(1).png', 1),
 (4, 1, '1D', 1, 'https://vecgroup.vn/upload_images/images/2021/12/09/kich-thuoc-san-bong-11-nguoi(1).png', 1),
