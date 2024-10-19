@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    
+    <!-- Thêm đường dẫn đến file tinymce.min.js -->
+    <script src="/tinymce/tinymce.min.js"></script>
+    <script src="/js/tinymceConfig.js"></script>
+
+    <!-- Thêm Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Create New Post</h1>
+        
+        <!-- Form tạo bài viết -->
+        <form action="/posts" method="post" class="mt-4">
+            <!-- Phần nhập tiêu đề (Title) -->
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Enter your post title" required>
+            </div>
+
+            <!-- Phần nhập nội dung (Content) -->
+            <div class="mb-3">
+                <label for="content" class="form-label">Content:</label>
+                <textarea id="default" name="content" class="form-control" rows="10"></textarea>
+            </div>
+
+            <!-- Nút tạo bài viết -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Create Post</button>
+            </div>
+        </form>
+
+        <!-- Khu vực hiển thị các bài viết sau khi tạo -->
+        <div id="postDisplay" class="mt-5">
+            <h2>Recent Posts</h2>
+            <div id="posts">
+                <!-- Lặp qua danh sách các bài viết và hiển thị chúng -->
+                <div th:each="post : ${posts}" class="card mb-3">
+                    <div class="card-body">
+                        <p><span th:text="${post.authorName}">Unknown Author</span></p> <!-- Nếu authorName không tồn tại, hiển thị 'Unknown Author' -->
+                        <h5 th:text="${post.title}" class="card-title"></h5>
+                        <div th:utext="${post.content}" class="card-text"></div>
+
+                        <!-- Nút sửa và xóa bài viết -->
+                        <form action="/posts/delete" method="post">
+                            <input type="hidden" name="postId" th:value="${post.id}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cấu hình TinyMCE để lưu nội dung trước khi submit -->
+    <script>
+        tinymce.init({
+            selector: 'textarea#default',
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save(); // Save content to textarea before form submission
+                });
+            },
+            height: 300,
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+        });
+
+        // Kiểm tra nội dung TinyMCE trước khi submit form
+        document.querySelector('form').addEventListener('submit', function(e) {
+            var content = tinymce.get('default').getContent(); // Lấy nội dung từ TinyMCE
+            if (content.trim() === '') {
+                alert('Please enter content before submitting.');
+                e.preventDefault(); // Ngăn không cho form được submit
+            }
+        });
+    </script>
+</body>
+</html>
