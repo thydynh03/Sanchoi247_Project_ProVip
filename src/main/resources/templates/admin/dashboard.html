@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .small-box {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .small-box .inner {
+            margin-bottom: 20px;
+        }
+
+        .small-box h3 {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+        }
+
+        .small-box p {
+            font-size: 1.2em;
+            margin: 0;
+        }
+
+        .small-box-footer {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            display: block;
+            text-align: center;
+            padding: 10px;
+            border-radius: 0 0 10px 10px;
+            text-decoration: none;
+        }
+
+        .small-box-footer:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .small-box .icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 3em;
+            opacity: 0.3;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+
+        .bg-purple {
+            background-color: #6f42c1;
+            color: white;
+        }
+        .small-box-footer {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            display: block;
+            text-align: center;
+            padding: 10px;
+            border-radius: 0 0 10px 10px;
+            text-decoration: none;
+        }
+
+        .small-box-footer:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .small-box-footer {
+            pointer-events: auto;
+            /* Đảm bảo sự kiện click được cho phép */
+            z-index: 1;
+            /* Đảm bảo thẻ <a> không bị các phần tử khác che khuất */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- Dashboard Content -->
+        <div class="row mt-4">
+            <div class="col-lg-12 d-flex"> 
+                <h1 class="h3 mb-4 text-gray-800">Dashboard</h1> &nbsp;&nbsp;
+                <span><a th:href="@{/}" class="btn btn-primary">Home Page</a></span>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-lg-3 col-6 mb-4">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h4 th:text="${statisticsOfAdmin.totalSoldAmountActiveStadiums}">0.0</h4>
+                        <p>All Revenues from Stadium</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6 mb-4">
+                <div class="small-box bg-warning">  
+                    <div class="inner">
+                        <h4 th:text="${statisticsOfAdmin.totalOngoingStadiums}">123</h4>
+                        <p>Active Stadiums</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a th:href="@{/ViewAllStadiumsActive}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6 mb-4">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h4 th:text="${statisticsOfAdmin.totalApprovedStadiums}">456</h4>
+                        <p>Stadium approval pending</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-checkmark-circled"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6 mb-4">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h4 th:text="${statisticsOfAdmin.totalRejectedStadiums}">789</h4>
+                        <p>Rejected Stadiums</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-close-circled"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6 mb-4">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h4 th:text="${statisticsOfAdmin.totalInactiveOwners}">789</h4>
+                        <p>Inactive Owners</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6 mb-4">
+                <div class="small-box bg-secondary">
+                    <div class="inner">
+                        <h4 th:text="${statisticsOfAdmin.totalActiveOwners}">789</h4>
+                        <p>Active Owners</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person"></i>
+                    </div>
+                    <a th:href="@{/ViewActiveOwner}" class="small-box-footer">More info <i
+                        class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6 mb-4">
+                <div class="small-box bg-dark">
+                    <div class="inner">
+                        <h4 th:text="${statisticsOfAdmin.totalUsersExcludingOwners}">789</h4>
+                        <p>All Users</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>
+                    <a th:href="@{/ViewAllUser}" class="small-box-footer">More info <i
+                        class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6 mb-4">
+                <div class="small-box bg-purple">
+                    <div class="inner">
+                        <h4 th:text="${statisticsOfAdmin.totalBannedUsers}">789</h4>
+                        <p>Banned Users</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-alert"></i>
+                    </div>
+                    <a th:href="@{/ViewAllBanner}" class="small-box-footer">More info <i
+                        class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Daily Revenue</h6>
+                    </div>
+                    <div class="card-body chart-container">
+                        <canvas id="dailyRevenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Monthly Revenue</h6>
+                    </div>
+                    <div class="card-body chart-container">
+                        <canvas id="monthlyRevenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Stadium Information</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Stadium Name</th>
+                                        <th>Owner Information</th>
+                                        <th>Revenue</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="eventRevenue : ${stadiumRevenues}">
+                                        <td th:text="${eventRevenue.stadiumName}">Stadium Name</td>
+                                        <td th:text="${eventRevenue.ownerName}">Owner</td>
+                                        <td class="price" th:text="${eventRevenue.revenue}">Revenue</td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var dailyRevenue = [[${ dailyRevenue }]];
+            var monthlyRevenue = [[
+            ${ monthlyRevenue }]];
+
+            // Logging the values to check the data
+            console.log("Daily Revenue from Thymeleaf: ", dailyRevenue);
+            console.log("Monthly Revenue from Thymeleaf: ", monthlyRevenue);
+
+            // Generating labels for the daily revenue chart
+            var dailyLabels = [];
+            for (var i = 0; i < dailyRevenue.length; i++) {
+                var date = new Date();
+                date.setDate(date.getDate() - (dailyRevenue.length - 1 - i));
+                var dateString = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                dailyLabels.push(dateString);
+            }
+
+            // Initializing the daily revenue chart
+            var ctxDaily = document.getElementById('dailyRevenueChart').getContext('2d');
+            var dailyRevenueChart = new Chart(ctxDaily, {
+                type: 'line',
+                data: {
+                    labels: dailyLabels,
+                    datasets: [{
+                        label: 'Revenue',
+                        data: dailyRevenue,
+                        backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                        borderColor: 'rgba(78, 115, 223, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'VND' }).format(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'VND' }).format(context.parsed.y);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Initializing the monthly revenue chart
+            var ctxMonthly = document.getElementById('monthlyRevenueChart').getContext('2d');
+            var monthlyRevenueChart = new Chart(ctxMonthly, {
+                type: 'bar',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: monthlyRevenue,
+                        backgroundColor: 'rgba(28, 200, 138, 0.2)',
+                        borderColor: 'rgba(28, 200, 138, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'VND' }).format(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'VND' }).format(context.parsed.y);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

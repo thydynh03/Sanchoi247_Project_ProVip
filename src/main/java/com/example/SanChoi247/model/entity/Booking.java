@@ -25,8 +25,8 @@ public class Booking {
     private LocalDateTime date;
     private User user;
     private San san;
-    private int quantity;
-    private double price;
+    private ScheduleBooking scheduleBooking;
+    private double totalprice;
     private PaymentStatus status;
     private String vnpayData;
 

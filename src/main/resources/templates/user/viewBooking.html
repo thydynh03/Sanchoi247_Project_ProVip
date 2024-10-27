@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>View Booking</h1>
+    <table class="table table-bordered" border="1px">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Booking Date</th>
+                <th>Stadium Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>VNPAY Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="b : ${BookingList}" th:if="${b.status.toString() == 'SUCCESS'}">
+                <td th:text="${b.booking_id}">ID</td>
+                <td th:text="${#temporals.format(b.date, 'yyyy-MM-dd HH:mm:ss')}">Date</td>
+                <td th:text="${b.san.user.ten_san}">Stadium Name</td>
+                <td th:text="${b.scheduleBooking.start_time}">Start Time</td>
+                <td th:text="${b.scheduleBooking.end_time}">End Time</td>
+                <td th:text="${b.totalprice}">Price</td>
+                <td th:text="${b.status.toString()}">Status</td>
+                <td th:text="${b.vnpayData}">VNPAY Data</td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/}" class="btn btn-primary">Back to Home</a>
+</body>
+</html>

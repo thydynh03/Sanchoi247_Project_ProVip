@@ -1,8 +1,14 @@
 package com.example.SanChoi247.model.entity;
 
-import java.time.LocalDateTime;
 
-import lombok.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -10,11 +16,13 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class ScheduleBooking {
+   
     private int booking_id;
     private San san;
-    private LocalDateTime start_time;
-    private LocalDateTime end_time;
+    private LocalTime start_time; // Use LocalTime instead of LocalDateTime
+    private LocalTime end_time;   // Use LocalTime instead of LocalDateTime
     private String status; // 'booked', 'available'
     private float price;
+    private LocalDate booking_date;
     
 }

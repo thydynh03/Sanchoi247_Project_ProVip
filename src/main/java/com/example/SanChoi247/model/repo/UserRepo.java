@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -573,5 +574,80 @@ public class UserRepo {
         ps.close();
         con.close();
         return exists;
+    }
+    public String getPasswordByEmail(String email) {
+        String encodedPassword = null;
+        String query = "SELECT password FROM users WHERE email = ?";
+
+        try (Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
+                Baseconnection.password);
+                PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    encodedPassword = rs.getString("password");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return encodedPassword; // Trả về mật khẩu mã hóa
+    }
+    public List<User> getAllOngoingStadium() throws Exception {
+        Class.forName(Baseconnection.nameClass);
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM users WHERE status = 4";
+
+        try (Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
+                Baseconnection.password);
+                PreparedStatement statement = con.prepareStatement(query);
+                ResultSet rs = statement.executeQuery()) {
+
+            while (rs.next()) {
+                User user = new User();
+                user.setUid(rs.getInt("uid"));
+                user.setName(rs.getString("name"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setPhone(rs.getString("phone"));
+                user.setDob(rs.getDate("dob"));
+                user.setGender(rs.getString("gender").charAt(0));
+                user.setAvatar(rs.getString("avatar"));
+                user.setRole(rs.getString("role").charAt(0));
+                user.setEmail(rs.getString("email"));
+                user.setTen_san(rs.getString("ten_san"));
+                user.setAddress(rs.getString("address"));
+                user.setImg_san1(rs.getString("img_san1"));
+                user.setImg_san2(rs.getString("img_san2"));
+                user.setImg_san3(rs.getString("img_san3"));
+                user.setImg_san4(rs.getString("img_san4"));
+                user.setImg_san5(rs.getString("img_san5"));
+                user.setStatus(rs.getInt("status"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+    public List<User> searchStadium(String keyword) throws Exception {
+        List<User> user = getAllOngoingStadium();
+        List<User> findStadium = new ArrayList<>();
+        for (int i = 0; i < user.size(); i++) {
+            if (user.get(i).getTen_san().toLowerCase().contains(keyword.toLowerCase())) {
+                findStadium.add(user.get(i));
+            }
+        }
+        return findStadium;
+    }
+    public int updatePasswordByEmail(String email, String encodedPassword) throws SQLException {
+        String query = "UPDATE users SET password = ? WHERE email = ?";
+
+        try (Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
+                Baseconnection.password);
+                PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, encodedPassword);
+            ps.setString(2, email);
+            return ps.executeUpdate(); // Trả về số hàng được cập nhật
+        }
     }
 }
