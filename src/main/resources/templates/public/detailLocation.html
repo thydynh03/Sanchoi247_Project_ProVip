@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sân</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap for styling -->
+</head>
+<body>
+
+    <div class="container mt-5">
+    <h1 class="text-center">Chi tiết sân</h1>
+
+    <!-- Hiển thị chi tiết sân -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Vị trí sân: <span th:text="${SanDetail.vi_tri_san}"></span></h5>
+            <p class="card-text">Loại sân: <span th:text="${SanDetail.loaiSan.loai_san_id}"></span></p>
+            <p class="card-text">Kích thước sân: <span th:text="${SanDetail.size.size_id}"></span></p>
+            <p class="card-text">Số lượt xem: <span th:text="${SanDetail.eyeview}"></span></p>
+            <p class="card-text">Trạng thái duyệt: <span th:text="${SanDetail.is_approve}"></span></p>
+            <img th:src="@{${SanDetail.img}}" alt="Image of San" class="img-fluid"/>
+        </div>
+    </div>
+
+    <!-- Chọn ngày -->
+    <div class="form-group">
+        <label for="bookingDate">Chọn ngày:</label>
+        <input type="date" id="bookingDate" class="form-control"\/>
+    </div>
+
+    <!-- Hiển thị danh sách các booking -->
+    <h2 class="text-center">Danh sách khung giờ đặt sân</h2>
+    <table class="table table-bordered table-striped" id="timeSlotsTable">
+        <thead>
+            <tr>
+                <th>Thời gian bắt đầu</th>
+                <th>Thời gian kết thúc</th>
+                <th>Trạng thái</th>
+                <th>Chọn</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="booking : ${bookings}">
+                <td th:text="${#temporals.format(booking.start_time, ' HH:mm')}"></td>
+                <td th:text="${#temporals.format(booking.end_time, ' HH:mm')}"></td>
+                
+                <td th:text="${booking.status}"></td>
+                <td th:text="${booking.price}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <h1 id="san_id_check" hidden th:text="${SanDetail.san_id}"></h1>
+</div>
+
+
+
+
+</body>
+</html>
