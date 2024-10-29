@@ -171,7 +171,18 @@
                         class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
+            <div class="col-lg-3 col-6 mb-4">
+                <div class="small-box bg-secondary">
+                    <div class="inner">
+                        <h4 th:text="${statisticsOfAdmin.totalActiveOwners}">789</h4>
+                        <p>Approved Field Owners</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person"></i>
+                    </div>
+                    <a th:href="@{/admin/approveFieldOwner}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
             <div class="col-lg-3 col-6 mb-4">
                 <div class="small-box bg-dark">
                     <div class="inner">
@@ -264,14 +275,14 @@
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            var dailyRevenue = [[${ dailyRevenue }]];
-            var monthlyRevenue = [[
-            ${ monthlyRevenue }]];
+$(document).ready(function () {
+    // Thymeleaf will render these variables directly as arrays if they're properly formatted in the backend
+    var dailyRevenue = /*[[${dailyRevenue}]]*/ [];
+    var monthlyRevenue = /*[[${monthlyRevenue}]]*/ [];
 
-            // Logging the values to check the data
-            console.log("Daily Revenue from Thymeleaf: ", dailyRevenue);
-            console.log("Monthly Revenue from Thymeleaf: ", monthlyRevenue);
+    // Logging the values to check the data
+    console.log("Daily Revenue from Thymeleaf: ", dailyRevenue);
+    console.log("Monthly Revenue from Thymeleaf: ", monthlyRevenue);
 
             // Generating labels for the daily revenue chart
             var dailyLabels = [];

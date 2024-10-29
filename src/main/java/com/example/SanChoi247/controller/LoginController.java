@@ -78,11 +78,14 @@ public class LoginController {
         httpSession.invalidate();
         return "redirect:/";
     }
-
+    @GetMapping("/auth/banned")
+    public String bannedPage() {
+        return "auth/banned"; // Tên của view (HTML) hiển thị trang thông báo tài khoản bị khóa
+    }    
     @PostMapping("/LoginToSystem")
     public ResponseEntity<?> loginToSystem(@RequestParam("username") String username, 
-                                            @RequestParam("password") String password,
-                                            HttpSession httpSession) throws Exception {
+                                           @RequestParam("password") String password,
+                                           HttpSession httpSession) throws Exception {
         User user = loginRepo.checkLogin(username, password);
         
         if (user == null) {
@@ -94,27 +97,41 @@ public class LoginController {
             
             // Thông báo trong console
             System.out.println("Token created for user: " + username + " - Token: " + token);
-            System.out.println("Token created for user: " + user.getUid() + " - Token: " + token);
-            System.out.println("Token created for user: " + user.getAvatar() + " - Token: " + token);
-            System.out.println("Token created for user: " + user.getName() + " - Token: " + token);
-
-            // Lưu token vào session
+            System.out.println("User ID: " + user.getUid());
+            System.out.println("User Avatar: " + user.getAvatar());
+            System.out.println("User Name: " + user.getName());
+    
+            // Lưu token và thông tin người dùng vào session
             httpSession.setAttribute("accessToken", token);
             httpSession.setAttribute("UserAfterLogin", user); // Lưu thông tin người dùng vào session
-            httpSession.setAttribute("userRole", user.getRole()); // Lưu role vào session riêng biệt
-
-
-            // Trả về token và thông tin cần thiết
+            httpSession.setAttribute("userRole", user.getRole()); // Lưu vai trò của người dùng vào session
+            
+            // Tạo phản hồi với token và thông tin người dùng
             Map<String, Object> response = new HashMap<>();
             response.put("accessToken", token);
             response.put("username", user.getUsername());
             response.put("uid", user.getUid()); // Thêm UID vào phản hồi
             response.put("avatar", user.getAvatar()); // Thêm avatar vào phản hồi
-            response.put("name", user.getName()); // Thêm name vào phản hồi
+            response.put("name", user.getName()); // Thêm tên vào phản hồi
             
-            return ResponseEntity.ok(response); // Trả về phản hồi thành công
+            // Kiểm tra redirect URL từ session
+            String redirect = (String) httpSession.getAttribute("redirect");
+            if (redirect != null) {
+                httpSession.removeAttribute("redirect"); // Xóa redirect khỏi session sau khi lấy
+                response.put("redirect", redirect);
+            } else if (user.getRole() == 'A') {
+                response.put("redirect", "/admin/dashboard"); // Điều hướng admin đến dashboard
+            } else if (user.getRole() == 'p' || user.getRole() == 'b') {
+                response.put("redirect", "/auth/banned"); // Điều hướng người dùng bị cấm
+            } else {
+                response.put("redirect", "/"); // Điều hướng người dùng bình thường đến trang chủ
+            }
+    
+            return ResponseEntity.ok(response); // Trả về phản hồi thành công với các thông tin cần thiết
         }
     }
+
+    
     @PostMapping("/UserAfterLogin")
     @ResponseBody
     public ResponseEntity<?> afterLoginWithGG(HttpServletRequest request, Authentication authentication) throws Exception {
@@ -149,7 +166,7 @@ public class LoginController {
         session.setAttribute("UserAfterLogin", existingUser);
         session.setAttribute("accessToken", token);
         session.setAttribute("userRole", existingUser.getRole()); // Lưu role vào session riêng biệt
-
+    
         // Tạo đối tượng phản hồi
         Map<String, Object> response = new HashMap<>();
         response.put("accessToken", token);
@@ -158,8 +175,22 @@ public class LoginController {
         response.put("avatar", avatar);
         response.put("name", name);
     
+        // Kiểm tra redirect URL từ session
+        String redirect = (String) session.getAttribute("redirect");
+        if (redirect != null) {
+            session.removeAttribute("redirect"); // Xóa redirect khỏi session sau khi lấy
+            response.put("redirect", redirect);
+        } else if (existingUser.getRole() == 'A') {
+            response.put("redirect", "/admin/dashboard"); // Điều hướng admin đến dashboard
+        } else if (existingUser.getRole() == 'p' || existingUser.getRole() == 'b') {
+            response.put("redirect", "/auth/banned"); // Điều hướng người dùng bị cấm
+        } else {
+            response.put("redirect", "/"); // Điều hướng người dùng bình thường đến trang chủ
+        }
+    
         return ResponseEntity.ok(response); // Trả về JSON thành công
     }
+    
     
     
     
@@ -188,16 +219,15 @@ public String showLoginPage() {
         return "auth/login"; // Trả về trang đăng ký
     }
 
-    @PostMapping("/Signup")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest, HttpSession httpSession) throws Exception {
-        String email = signUpRequest.getEmail();
-        String name = signUpRequest.getName();
-        String username = signUpRequest.getUsername();
-        String password = signUpRequest.getPassword();
-        String confirmPassword = signUpRequest.getConfirmPassword();
-        char role = 'U'; // Default role
-        char gender = signUpRequest.getGender(); // Get first character (M or F)
-        
+@PostMapping("/Signup")
+public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest, HttpSession httpSession) throws Exception {
+    String email = signUpRequest.getEmail();
+    String name = signUpRequest.getName();
+    String username = signUpRequest.getUsername();
+    String password = signUpRequest.getPassword();
+    String confirmPassword = signUpRequest.getConfirmPassword();
+    char role = 'U'; // Default role
+    char gender = signUpRequest.getGender(); // Get first character (M or F)
     
     // Check for existing username
     if (userRepo.existsByUsername(username)) {
@@ -214,14 +244,14 @@ public String showLoginPage() {
         return ResponseEntity.badRequest().body(new ErrorResponse("Password invalid."));
     }
 
-// Check if passwords match
-System.out.println("Password: " + password);
-System.out.println("Confirm Password: " + confirmPassword);
+    // Check if passwords match
+    System.out.println("Password: " + password);
+    System.out.println("Confirm Password: " + confirmPassword);
     if (!userRepo.isValidPassword(password)) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password invalid.");
     }
 
-
+    // Create new user
     User newUser = new User();
     newUser.setName(name);
     newUser.setEmail(email);
@@ -229,9 +259,24 @@ System.out.println("Confirm Password: " + confirmPassword);
     newUser.setPassword(password);
     newUser.setRole(Character.toUpperCase(role));
     newUser.setGender(gender); // Store the gender
+
+    // Generate avatar based on the first letter of the name
+    if (name != null && !name.isEmpty()) {
+        String avatarDefault = String.valueOf(name.charAt(0)).toUpperCase(); // Lấy chữ cái đầu và viết hoa
+        newUser.setAvatar(avatarDefault);
+    } else {
+        newUser.setAvatar("U"); // Nếu không có tên, đặt mặc định là "U"
+    }
+
     // Store user in session
     System.out.println("New User before saving: " + newUser);
-    
+        // Tạo URL avatar dựa trên chữ cái đầu của tên
+        if (name != null && !name.isEmpty()) {
+            String avatarUrl = "https://ui-avatars.com/api/?name=" + name.charAt(0) + "&background=random";
+            newUser.setAvatar(avatarUrl); // Lưu URL avatar vào trường avatar
+        } else {
+            newUser.setAvatar("https://ui-avatars.com/api/?name=U&background=random"); // URL mặc định nếu không có tên
+        }
     // Validate newUser fields
     if (newUser.getName() == null || newUser.getEmail() == null || newUser.getUsername() == null || newUser.getPassword() == null) {
         throw new Exception("Name, Email, or Username cannot be null.");
@@ -240,16 +285,15 @@ System.out.println("Confirm Password: " + confirmPassword);
     // Store user in session
     httpSession.setAttribute("newUser", newUser);
 
-
     // Send OTP via email
     try {
         generatedOtp = sendOtpToMailService.sendOtpService(email);
         return ResponseEntity.ok(new SuccessResponse("OTP sent to your email.", "auth/enterOtp"));
-        
     } catch (RuntimeException e) {
         return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
     }
 }
+
 
 // ErrorResponse and SuccessResponse classes for structured responses
 public class ErrorResponse {

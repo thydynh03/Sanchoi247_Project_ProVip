@@ -1,4 +1,4 @@
-package com.example.SanChoi247.model.service;
+package com.example.SanChoi247.service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.SanChoi247.model.entity.User;
 import com.example.SanChoi247.model.repo.Baseconnection;
 import com.example.SanChoi247.model.repo.UserRepo;
+import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class UserService {
@@ -58,5 +61,42 @@ public class UserService {
         }
         return false; // Trả về false nếu không tìm thấy email
     }
+    public boolean requestFieldOwner(int uid) {
+        try {
+            userRepo.requestFieldOwner(uid);
+            return true; // Request submitted successfully
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Request failed
+        }
+    }
 
+    public List<User> getPendingRequests() {
+        try {
+            // You can implement a similar method in `UserRepo` to fetch users with status = 1
+            return userRepo.getUsersByStatus(1); // Get users with pending requests (status = 1)
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); // Return empty list if an error occurs
+        }
+    }
+
+    public boolean approveFieldOwner(int uid, boolean isApproved) {
+        try {
+            userRepo.approveFieldOwnerRequest(uid, isApproved);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public User getUserById(int uid) {
+        try {
+            return userRepo.getUserById(uid);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // Return null if user is not found
+        }
+    }
 }

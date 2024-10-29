@@ -12,6 +12,7 @@ const db = mysql.createConnection({
     password: 'thithithi0305', // Replace with your MySQL password
     database: 'SanChoi247'
 });
+const welcomeMessage = "Welcome to SanChoi247!";
 
 db.connect((err) => {
     if (err) {
@@ -104,9 +105,9 @@ wss.on('connection', (ws, req) => {
     });
 
  // Handle incoming messages from clients
-ws.on('message', (data) => {
+ ws.on('message', (data) => {
     const message = JSON.parse(data);
-    
+
     if (message.type === 'chat') {
         const senderInfo = clients.get(ws);
         if (senderInfo) {
@@ -116,10 +117,10 @@ ws.on('message', (data) => {
             if (chatMessage.trim() !== "") {
                 console.log('Received chat message from:', senderInfo.name, 'Message:', chatMessage);
 
-                // Store the message in the database
+                // Lưu tin nhắn vào cơ sở dữ liệu và phát đến người khác
                 const messageToSave = {
                     senderUid: senderInfo.uid,
-                    receiverUid: null, // Set receiverUid if needed
+                    receiverUid: null,
                     content: chatMessage,
                     timestamp: new Date().toISOString(),
                     senderName: senderInfo.name,
@@ -128,9 +129,7 @@ ws.on('message', (data) => {
 
                 fetch('http://localhost:8080/api/messages', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(messageToSave)
                 })
                 .then(response => {
@@ -138,27 +137,26 @@ ws.on('message', (data) => {
                         throw new Error('Network response was not ok');
                     }
                     console.log('Message saved to database');
+
+                    // Phát tin nhắn đến tất cả các client khác
+                    wss.clients.forEach((client) => {
+                        if (client.readyState === WebSocket.OPEN && client !== ws) {
+                            client.send(JSON.stringify({
+                                type: 'chat',
+                                sender: senderInfo.name,
+                                avatar: senderInfo.avatar,
+                                message: chatMessage
+                            }));
+                        }
+                    });
                 })
                 .catch(err => {
                     console.error('Error saving message:', err);
                 });
-
-                // Broadcast the message to all connected clients except the sender
-                wss.clients.forEach((client) => {
-                    if (client.readyState === WebSocket.OPEN && client !== ws) {
-                        client.send(JSON.stringify({
-                            type: 'chat',
-                            sender: senderInfo.name,
-                            avatar: senderInfo.avatar,
-                            message: chatMessage
-                        }));
-                        }
-                    });
-                }
             }
         }
-    });
-
+    }
+});
     // Handle client disconnections
     ws.on('close', () => {
         const userInfo = clients.get(ws);

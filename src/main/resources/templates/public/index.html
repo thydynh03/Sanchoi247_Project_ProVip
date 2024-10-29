@@ -28,9 +28,10 @@
             transition: transform 0.3s ease, color 0.3s ease; /* Thêm hiệu ứng chuyển động */
         }
 
+
         .navbar-nav .nav-link:hover {
-            transform: translateY(-5px); /* Đẩy lên 5px khi hover */
-            color: #3b724e; /* Chuyển thành màu vàng khi hover */
+            color: #759C83; /* Change color on hover */
+            transform: translateY(-2px); /* Move up slightly on hover */
         }
         .navbar-nav .nav-link {
             color: #000;
@@ -72,19 +73,30 @@
         .navbar-custom {
             background-color: #ebf0ed;
             padding: 20px;
+            transition: transform 0.3s ease;
         }
+
 
         .navbar-nav .nav-link {
             color: #000;
             margin: 0 10px;
             font-size: 18px;
             padding: 10px 20px;
+            font-weight: 500;   
+            transition: transform 0.3s ease, color 0.3s ease;
         }
 
         .navbar-brand img {
             height: 60px;
+            width: 60px; /* Đảm bảo chiều rộng bằng chiều cao */
+            border-radius: 50%; /* Đặt border-radius thành 50% để tạo hình tròn */
         }
-
+        .sports-dropdown .dropdown-menu {
+            display: none; /* Ẩn menu xổ xuống mặc định */
+        }
+        .sports-dropdown:hover .dropdown-menu {
+            display: block; /* Hiện menu khi rê chuột vào mục SPORTS */
+        }
         .navbar-brand {
             margin-right: auto;
         }
@@ -93,25 +105,31 @@
             border-color: #000;
             padding: 10px;
         }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
         /* Các tùy chọn trong dropdown */
         .dropdown-menu .dropdown-item {
             font-size: 18px; /* Tăng kích thước chữ */
-            font-weight: bold; /* Làm cho chữ đậm */
+            font-weight: 500; /* Làm cho chữ đậm */
             color: #333; /* Màu chữ */
             padding: 15px 20px; /* Tăng khoảng cách padding */
         }
 
         /* Thay đổi khi người dùng di chuột vào */
         .dropdown-menu .dropdown-item:hover {
-            background-color: #f1f1f1; /* Màu nền khi hover */
-            color: #000; /* Màu chữ khi hover */
+            background-color: #f1f1f1;
+            color: #759C83;
+            transform: translateY(-2px);
         }
-
         /* Tùy chọn thêm màu sắc đặc biệt cho nút đăng xuất */
         .dropdown-item.logout {
-            color: red; /* Làm cho chữ đăng xuất có màu đỏ */
-            font-weight: bold; /* Tăng độ đậm chữ */
+            color: red;
+            font-weight: bold;
         }
+
         .banner-video-2 {
             margin-top: 15px;
             width: 100%; /* Đặt chiều rộng 100% để hình ảnh chiếm toàn bộ chiều rộng của khung chứa */
@@ -165,7 +183,8 @@
         }
         
         .footerComponent-footer {
-            background-color: #3b724e; /* Màu nền đỏ */
+            margin-top: 15px;
+            background-color: #759C83; /* Màu nền đỏ */
             color: #ffffff; /* Màu chữ trắng */
             padding: 20px 0;
         }
@@ -189,6 +208,7 @@
             margin: 10px; /* Căn lề cho từng cột */
             transition: transform 0.3s ease; /* Thêm hiệu ứng chuyển động */
         }
+
 
         .footerComponent-col:hover {
             transform: translateY(-5px); /* Đẩy lên 5px khi hover */
@@ -233,7 +253,24 @@
         .fas, .fab {
             margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
         }
+        .text-center-loadmore {
+            text-align: center;
+            margin-top: 40px; /* Adjust top margin */
+            margin-bottom: 40px; /* Adjust bottom margin */
+        }
+        #loadMore {
+            background-color: #759C83;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
+        #loadMore:hover {
+            background-color: #607d6d;
+        }
         .navbar-brand img {
             height: 60px;
             border-radius: 50%; /* Thêm thuộc tính border-radius để làm hình tròn */
@@ -253,7 +290,107 @@
     display: none;
     z-index: 1000;
 }
+.features-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
 
+        }
+
+        .feature-item {
+            text-align: center;
+            margin: 20px;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .feature-item img {
+            width: 60px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .hot-news-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .hot-news-item {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .hot-news-item img {
+            width: 100%;
+            height: 200px; /* Đặt chiều cao cho hình ảnh */
+            object-fit: cover; /* Đảm bảo hình ảnh hiển thị đẹp mắt */
+        }
+
+        .hot-news-item .card-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .hot-news-item h5 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .hot-news-item p {
+            font-size: 14px;
+            color: #555;
+            flex-grow: 1; /* Cho phép phần mô tả kéo dài */
+        }
+
+        .hot-news-item .btn {
+            background-color: #759C83;
+            color: white;
+            border: none;
+            margin-top: 10px;
+            align-self: flex-start; /* Canh nút về bên trái */
+        }
+        .anhmang {
+            display: flex;
+            justify-content: center; /* Căn giữa theo chiều ngang */
+            width: 100%;
+        }
+
+        .anhmang img {
+            height: auto;
+            max-width: 100%; /* Đảm bảo ảnh không vượt quá kích thước container */
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out; /* Thời gian chuyển đổi và hiệu ứng */
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Di chuyển lên trên 5px khi rê chuột vào */
+        }
 .chat-header {
     background-color: #3b724e;
     color: #ffffff;
@@ -409,7 +546,7 @@
     <!-- Sticky Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" th:href="@{/}">
                 <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728240612/nptm9pv1ifhzdrogjfk8.webp" alt="Logo"> <!-- Replace with your logo URL -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -420,29 +557,32 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#" onclick="scrollToTop(); return false;">HOME</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">FOOTBALL</a>
+                    <li class="nav-item dropdown sports-dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="sportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            SPORTS
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sportsDropdown">
+                            <li><a class="dropdown-item" href="">FOOTBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">PICKLEBALL</a></li>
+                            <li><a class="dropdown-item" href="#">BASKETBALL</a></li>
+                            <li><a class="dropdown-item" href="#">VOLLEYBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TABLE TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">GOLF</a></li>
+                            <li><a class="dropdown-item" href="#">BADMINTON</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">TENNIS</a>
+                        <a class="nav-link" th:href="@{/ShowIntroduction}">INTRODUCTION</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">PICKLEBALL</a>
+                        <a class="nav-link" href="#">POLICY</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">BASKETBALL</a>
+                        <a class="nav-link" href="#">TERMS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">VOLLEYBALL</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">TABLE TENNIS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">GOLF</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">BADMINTON</a>
+                        <a class="nav-link" th:href="@{user/requestFieldOwner}">FOR OWNERS</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/Box}">BOX CHAT</a>
@@ -451,7 +591,7 @@
                         <a class="nav-link" th:href="@{/blog}">BLOG</a>
                     </li>
                     <li th:if="${session.UserAfterLogin == null}" class="nav-item">
-                        <a class="nav-link" th:href="@{/Login}">SIGN IN</a>
+                        <a class="nav-link" th:href="@{/Login}" style="color: black; background-color: #759C83; border-radius: 10px;">SIGN IN</a>
                     </li>
                     <!-- User avatar and dropdown -->
                     <li th:if="${session.UserAfterLogin != null}" class="nav-item dropdown">
@@ -460,9 +600,16 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role.toString == 'A'}">
+                                <a class="dropdown-item" th:href="@{/admin/dashboard}">Dashboard</a>
+                            </li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role.toString == 'C'}">
+                                <a class="dropdown-item" th:href="@{/admin/dashboard}">See Stadium</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/ShowBookingByUserId}">See Booking</a></li>
                             <li><a class="dropdown-item" href="#">Help & Support</a></li>
                             <li><a class="dropdown-item" href="#">Give Feedback</a></li>
-                            <li><a class="dropdown-item" th:href="@{/Logout}">Log Out</a></li>
+                            <li><a class="dropdown-item" th:href="@{/Logout}" style="color: #759C83;">Log Out</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -482,28 +629,43 @@
     <div class="container mt-5 mb-5" data-aos="fade-up" data-aos-duration="1000">
         <div class="card" style="background-color: #ebf0ed; border: none;">
             <div class="card-body">
-                <form class="row g-3">
+                <form class="row g-3" th:action="@{/SearchSanByTenSan}" method="post">
                     <div class="col-md-3">
-                        <input type="text" class="form-control form-control-lg" placeholder="Name" aria-label="Name" style="height: 55px;">
+                        <input type="text" name="Search" class="form-control form-control-lg" placeholder="Name" aria-label="Name" style="height: 55px;">
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control form-control-lg" placeholder="Location" aria-label="Location" style="height: 55px;">
+                        <select class="form-select form-select-lg" name="Location" aria-label="Loại thể thao" style="height: 55px;">
+                            <option selected>Location</option>
+                            <option value="Hải Châu">Hải Châu</option>
+                            <option value="Liên Chiểu">Liên Chiểu</option>
+                            <option value="Ngũ Hành Sơn">Ngũ Hành Sơn</option>
+                            <option value="Sơn Trà">Sơn Trà</option>
+                            <option value="Cẩm Lệ">Cẩm Lệ</option>
+                            <option value="Thanh Khê">Thanh Khê</option>
+                            <option value="Hòa Vang">Hòa Vang</option>
+                        </select>
                     </div>
                     <div class="col-md-3">
-                        <select class="form-select form-select-lg" aria-label="Loại thể thao" style="height: 55px;">
+                        <select class="form-select form-select-lg" name="SportType" aria-label="Loại thể thao" style="height: 55px;">
                             <option selected>Type</option>
-                            <option value="1">Football</option>
-                            <option value="2">Tennis</option>
-                            <option value="3">Basketball</option>
+                            <option value="Football">Football</option>
+                            <option value="Tennis">Tennis</option>
+                            <option value="Pickleball">Pickleball</option>
+                            <option value="Basketball">Basketball</option>
+                            <option value="Volleyball">Volleyball</option>
+                            <option value="Table Tennis">Table Tennis</option>
+                            <option value="Golf">Golf</option>
+                            <option value="Badminton">Badminton</option>
                         </select>
                     </div>
                     <div class="col-md-3 d-grid">
-                        <button type="submit" class="btn" style="background-color: #3b724e; color: white; height: 55px; font-size: 18px;">Search</button>
+                        <button type="submit" class="btn" style="background-color: #759C83; color: white; height: 55px; font-size: 18px;">Search</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
 
     <div class="title-h1">
         <h1>SPORT</h1>
@@ -596,18 +758,65 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: #ebf0ed;">
                         <h5 class="card-title" th:text="${San.ten_san}">Card title</h5>
                         <p class="card-text">
                             <i class="fas fa-map-marker-alt location-icon"></i>
                             <span th:text="${San.address}">Address here</span>
                         </p>
-                        <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn" style="background-color: #3b724e; color: white; border: none;">View</a>
+                        <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn" style="background-color: #759C83; color: white; border: none;">View</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="text-center-loadmore mt-4">
+            <button id="loadMore" class="btn" style="background-color: #759C83; color: white;">Load More</button>
+        </div>
     </div>
+
+    <div class="anhmang">
+        <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728817221/usooseoi5n9o5byrl1ku.png" alt="">
+</div>
+
+<div class="title-h1">
+    <h1>SPORT NEWS</h1>
+</div>
+
+<div class="container">
+    <div class="row" data-aos="fade-up" data-aos-duration="1000">
+        <div class="col-md-4 mb-4">
+            <div class="card" style="background-color: #ebf0ed;">
+                <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728393453/ejnziswtlomn0iwfuap4.jpg" class="card-img-top" alt="News Image">
+                <div class="card-body">
+                    <h5 class="card-title">Why did Ederson stay at Man City?</h5>
+                    <p class="card-text">Goalkeeper Ederson is still playing for Man City because no club could meet the transfer fee when he wanted to leave last summer.</p>
+                    <a href="https://vnexpress.net/vi-sao-ederson-o-lai-man-city-4801711.html" class="btn btn-primary" style="background-color: #759C83; border: 2px solid #759C83" target="_blank">Read More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card" style="background-color: #ebf0ed;">
+                <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728393389/vvmssb7ca3nlsxvvaz0v.jpg" class="card-img-top" alt="News Image">
+                <div class="card-body">
+                    <h5 class="card-title">China's rise in men's tennis</h5>
+                    <p class="card-text">After a few female players emerged, Chinese men's tennis has recently made a splash as it has begun to produce ATP Tour champions.</p>
+                    <a href="https://vnexpress.net/su-troi-day-cua-trung-quoc-o-lang-quan-vot-nam-4801606.html" class="btn btn-primary" style="background-color: #759C83; border: 2px solid #759C83" target="_blank">Read More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card" style="background-color: #ebf0ed;">
+                <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728811913/uw1g99o8rcgpx1bcajc5.jpg" class="card-img-top" alt="News Image">
+                <div class="card-body">
+                    <h5 class="card-title">VFF fined nearly 250 million VND</h5>
+                    <p class="card-text">The Vietnam Football Federation (VFF) was fined for failing to meet the medical requirements of the Asian Games taking place in September 2023.</p>
+                    <a href="https://vnexpress.net/vff-bi-phat-gan-250-trieu-dong-4801649.html" class="btn btn-primary" style="background-color: #759C83; border: 2px solid #759C83" target="_blank">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <footer class="footerComponent-footer">
         <div class="footerComponent-container">
@@ -617,7 +826,7 @@
                     <ul>
                         <li><i class="fas fa-map-marker-alt"></i> Khu đô thị FPT City, Ngũ Hành Sơn, Đà Nẵng, Việt Nam</li>
                         <li><i class="fas fa-phone"></i> 0987 689 426</li>
-                        <li><i class="fas fa-envelope"></i>anndb1930@gmail.com</li>
+                        <li><i class="fas fa-envelope"></i>247sanchoi@gmail.com</li>
                         <li><i class="fab fa-facebook"></i> <a href="https://www.facebook.com/profile.php?id=100023316487779" target="_blank">Facebook</a></li>
                         <li><i class="fas fa-comment"></i> <a href="https://zalo.me/0829508327" target="_blank">Zalo</a></li>
                     </ul>
@@ -625,7 +834,7 @@
                 <div class="footerComponent-col">
                     <h5 class="footerComponent-title">QUICK LINKS</h5>
                     <ul>
-                        <li><a class="nav-item" href="#" onclick="scrollToTop(); return false;">Home</a></li>
+                        <li><a class="nav-item" th:href="@{/}">Home</a></li>
                         <li><a href="#football">Football</a></li>
                         <li><a href="#tennis">Tennis</a></li>
                         <li><a href="#pickleball">Pickleball</a></li>
@@ -655,7 +864,7 @@
             </div>
         </div>
         <div class="footerComponent-text-center">
-            <p>SanChoi247 © 2024 - Made by Nguyễn Đình Thi</p>
+            <p>SanChoi247 © 2024 - Made by SanChoi247</p>
         </div>
     </footer>
 
@@ -663,7 +872,12 @@
     <button th:if="${session.UserAfterLogin != null}" class="round-button" onclick="toggleChat()">
         <i class="fas fa-comment-dots"></i>
     </button>
-
+    <div class="map">
+        <!-- Bạn có thể chèn Google Map hoặc hình ảnh ở đây -->
+    </div>
+    <div class="copyright">
+        SanChoi247 - Made by Sanchoi247
+    </div>
 <!-- Chat Box -->
 <div class="chat-box" id="chatBox">
     <div class="chat-header">
@@ -773,10 +987,13 @@
     saveTokenToSession(token);  // Lưu token vào sessionStorage
     return decoded.uid || decoded.sub || decoded.username || decoded.role;  // Trả về UID, sub, hoặc username
 }
-    // Hàm để tải tất cả tin nhắn từ cơ sở dữ liệu
-    function loadAllMessages() {
-    scrollToBottom();
-    fetch(`/api/messages/all`)  // Tải tất cả tin nhắn mà không cần phải lọc theo uid
+const displayedMessageIds = new Set();
+
+function loadAllMessages() {
+    const currentUserUid = getUserUidFromToken(getTokenFromSession()); // Lấy UID người dùng hiện tại
+    scrollToBottom(); // Cuộn xuống dưới cùng khi tải trang
+
+    fetch(`/api/messages/all`) // Gửi yêu cầu tải tất cả tin nhắn từ API
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -785,34 +1002,40 @@
         })
         .then(messages => {
             if (Array.isArray(messages)) {
-                // Xóa tất cả tin nhắn cũ trên giao diện
+                // Xóa nội dung cũ trong giao diện tin nhắn trước khi hiển thị lại
                 document.getElementById('messages').innerHTML = '';
-                const currentUserUid = getUserUidFromToken(getTokenFromSession()); // Lấy UID người dùng hiện tại
-                // Hiển thị tất cả tin nhắn nhận được từ API
+
+                // Duyệt qua từng tin nhắn và hiển thị nếu chưa được hiển thị trước đó
                 messages.forEach(message => {
-                    // So sánh UID
-                    const messageClass = message.senderUid === currentUserUid ? 'me' : 'other'; // Xác định ai là người gửi
-                    const avatarImg = message.senderAvatar ? `<img class="avatar" src="${message.senderAvatar}" alt="Avatar">` : '';
-                    document.getElementById('messages').innerHTML += `
-                        <div class="chat-message ${messageClass}">
-                            ${messageClass === 'other' ? avatarImg : ''}
-                            <div class="chat-content">
-                                <p class="name">${message.senderName || 'Unknown'}</p>
-                                <p class="text">${message.content}</p>
-                            </div>
-                            ${messageClass === 'me' ? avatarImg : ''}
-                        </div>`;
+                    if (!displayedMessageIds.has(message.id)) { // Kiểm tra xem ID đã hiển thị chưa
+                        displayedMessageIds.add(message.id); // Thêm ID vào tập hợp để đánh dấu đã hiển thị
+
+                        // Xác định lớp CSS để hiển thị tin nhắn bên phải hay trái
+                        const messageClass = message.senderUid === currentUserUid ? 'me' : 'other';
+                        const avatarImg = message.senderAvatar ? `<img class="avatar" src="${message.senderAvatar}" alt="Avatar">` : '';
+
+                        // Thêm HTML của tin nhắn vào giao diện
+                        document.getElementById('messages').innerHTML += `
+                            <div class="chat-message ${messageClass}">
+                                ${messageClass === 'other' ? avatarImg : ''}
+                                <div class="chat-content">
+                                    <p class="name">${message.senderName || 'Unknown'}</p>
+                                    <p class="text">${message.content}</p>
+                                </div>
+                                ${messageClass === 'me' ? avatarImg : ''}
+                            </div>`;
+                    }
                 });
-                console.log('Messages loaded successfully', messages);
+                scrollToBottom(); // Cuộn xuống dưới cùng khi có tin nhắn mới
             } else {
                 console.error('Unexpected response format:', messages);
             }
-            scrollToBottom();
         })
         .catch(err => {
             console.error('Failed to load messages:', err);
         });
 }
+
     // Lưu token vào localStorage
     function saveTokenToSession(token) {
     sessionStorage.setItem("token", token);
@@ -870,7 +1093,51 @@
     window.addEventListener('mouseup', stopDrag);
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const items = document.querySelectorAll('.popular-item');
+        const loadMoreButton = document.getElementById('loadMore');
+        let currentlyVisible = 4;
 
+        // Initially hide items beyond the first 6
+        items.forEach((item, index) => {
+            if (index >= currentlyVisible) {
+                item.style.display = 'none';
+            }
+        });
+
+        loadMoreButton.addEventListener('click', () => {
+            const hiddenItems = Array.from(items).filter(item => item.style.display === 'none');
+            hiddenItems.slice(0, 4).forEach(item => {
+                item.style.display = 'block';
+            });
+
+            if (hiddenItems.length <= 6) {
+                loadMoreButton.style.display = 'none'; // Hide button if no more items to show
+            }
+        });
+    });
+</script>
+
+<script>
+function submitSportType(sportType) {
+    // Tạo một form ẩn để gửi request
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/SearchSanByTenSan");
+
+    // Thêm input để truyền sportType vào form
+    var input = document.createElement("input");
+    input.setAttribute("type", "hidden");
+    input.setAttribute("name", "SportType");
+    input.setAttribute("value", sportType);
+    form.appendChild(input);
+
+    // Append form vào body và submit
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>

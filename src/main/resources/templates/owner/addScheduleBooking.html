@@ -1,7 +1,107 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    
     <title>Add Schedule</title>
+    <style>
+        /* Đặt font chữ và căn chỉnh cho toàn bộ trang */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style cho các nhãn và ô nhập liệu */
+        .schedule-input {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .schedule-input input[type="time"],
+        .schedule-input input[type="number"],
+        input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        input[type="date"]:focus,
+        .schedule-input input[type="time"]:focus,
+        .schedule-input input[type="number"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        /* Nút thêm và submit */
+        button[type="button"],
+        button[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        button[type="button"] {
+            background-color: #28a745;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        button[type="button"]:hover {
+            background-color: #218838;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Thông báo */
+        .info {
+            color: #555;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
     <script>
         // Function to show the next input field
         function showNextInput() {

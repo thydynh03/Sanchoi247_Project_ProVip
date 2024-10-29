@@ -106,7 +106,12 @@
             background-color: rgba(51, 51, 51, 0.8); /* Nền của bài viết với độ trong suốt */
             color: #f8f9fa; /* Màu chữ trắng */
         }
-
+        .card img {
+    max-width: 100%; /* Chiều rộng tối đa là 100% của container */
+    height: auto; /* Tự động điều chỉnh chiều cao để giữ tỉ lệ */
+    border-radius: 5px; /* Tùy chọn, làm mềm góc */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
+}
         .delete-btn {
             position: absolute;
             top: 20px;
@@ -226,7 +231,7 @@
         <div id="postDisplay" class="mt-5">
             <div id="posts">
                 <!-- Lặp qua danh sách các bài viết và hiển thị chúng -->
-                <div th:each="post : ${posts}" class="card mb-3" data-author-id="${post.authorId}">
+                <div th:each="post : ${posts}" class="card mb-3" th:data-author-id="${post.authorId}">
                     <div class="card-body">
                         <p><span th:text="${post.authorName}" style="color: #90ee90;"></span></p>
                         <h5 th:text="${post.title}" class="card-title" style="color: rgb(34, 160, 70);"></h5>
@@ -234,7 +239,7 @@
         
                         <!-- Kiểm tra quyền của người dùng hiện tại để hiển thị nút "Delete" -->
                         <form action="/posts/delete" method="post" class="delete-form" style="display: none;" id="deleteButton-${post.id}">
-                            <input type="hidden" name="postId" th:value="${post.id}">
+                            <input type="hidden" name="postId" value="${post.id}">
                             <button type="submit" class="btn btn-danger" style="position: absolute; right: 10px; top: 10px;">Delete</button>
                         </form>
                         
@@ -262,33 +267,39 @@
         return sessionStorage.getItem("token");
     }
     
+
     function displayUserInfo() {
-        const token = getTokenFromSession();
-        if (token) {
-            const decoded = jwt_decode(token);  // Giải mã token
-            console.log("Decoded Token:", decoded);  // In toàn bộ token đã giải mã ra console
+    const token = getTokenFromSession();
+    if (token) {
+        const decoded = jwt_decode(token);  // Giải mã token
+        console.log("Decoded Token:", decoded);  // In ra token đã giải mã để kiểm tra
 
-            // Hiển thị thông tin trong trang createPost nếu cần
-            document.getElementById("userInfo").innerHTML = `
-                <p>Name: ${decoded.name}</p>
-                 <p>Role: ${decoded.role}</p>
-                <p>UID: ${decoded.uid}</p>
-                <img src="${decoded.avatar}" alt="User Avatar" width="100"/>
-            `;
-            const posts = document.querySelectorAll('[id^="deleteButton-"]');
-                posts.forEach(post => {
-                    const postId = post.querySelector('input[name="postId"]').value;
-                    const authorId = post.getAttribute('data-author-id'); // Đảm bảo bạn có trường `data-author-id` trên mỗi bài post
+        // Hiển thị thông tin người dùng
+        document.getElementById("userInfo").innerHTML = `
+            <p>Name: ${decoded.name}</p>
+            <p>Role: ${decoded.role}</p>
+            <p>UID: ${decoded.uid}</p>
+            <img src="${decoded.avatar}" alt="User Avatar" width="100"/>
+        `;
 
-                    if (decoded.role === 'A' || decoded.uid == authorId) {
-                        post.style.display = 'block'; // Hiển thị nút delete nếu người dùng là admin hoặc là tác giả của bài viết
-                    }
-                });
-        
-        } else {
-            console.log("Token not found. Please log in again.");
-        }
+        // Duyệt qua tất cả các bài viết để kiểm tra quyền xóa
+        const posts = document.querySelectorAll('.card');
+        posts.forEach(post => {
+            const authorId = parseInt(post.getAttribute('data-author-id'), 10);
+            const userId = parseInt(decoded.uid, 10);
+            
+            // Lấy form delete của bài viết hiện tại
+            const deleteButton = post.querySelector('.delete-form');
+
+            // Hiển thị nút xóa nếu người dùng là admin hoặc là tác giả của bài viết
+            if (decoded.role === 'A' || userId === authorId) {
+                deleteButton.style.display = 'block';
+            }
+        });
+    } else {
+        console.log("Token not found. Please log in again.");
     }
+}
 
     // Gọi hàm để hiển thị thông tin khi trang load
     window.onload = displayUserInfo;
@@ -316,6 +327,7 @@
                 // Khi cuộn xuống, ẩn nút
                 backToHomeBtn.classList.remove('show');
             }
+
         });
     </script>
 </body>

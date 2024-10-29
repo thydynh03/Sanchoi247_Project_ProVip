@@ -340,7 +340,7 @@
                 <span>or use your account</span>
                 <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Enter Username" required>
                 <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Enter Password" required>
-                <a th:href="@{/ResetPassword}">Forgot your password?</a>
+                <a th:href="@{/forgot-password}">Forgot your password?</a>
                 <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
                 <button type="submit" class="button-login">Sign In</button>
             </form>
@@ -451,11 +451,22 @@
     })
     .then(data => {
         console.log('Response Data:', data); // In ra dữ liệu phản hồi
+
         if (data.accessToken) {
             saveToken(data.accessToken); // Lưu token vào localStorage
             console.log('Token created for user:', username); // Thông báo tạo token
             console.log('Token:', data.accessToken); // In token ra console
-            window.location.href = '/'; // Chuyển hướng sau khi lưu token
+
+            // Điều hướng dựa trên vai trò và thông tin redirect
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            } else if (data.role === 'A') {
+                window.location.href = '/admin/dashboard';
+            } else if (data.role === 'p' || data.role === 'b') {
+                window.location.href = '/auth/banned';
+            } else {
+                window.location.href = '/'; // Chuyển hướng về trang chủ nếu không có điều kiện nào
+            }
         } else {
             alert('Login failed: No token received');
         }
@@ -465,6 +476,7 @@
         alert('Login failed: ' + error.message);
     });
 }
+
 function loginWithGoogle() {
     const token = getTokenFromSession();
 
@@ -492,7 +504,17 @@ function loginWithGoogle() {
         if (data.accessToken) {
             saveToken(data.accessToken);
             console.log('Token created for user from Google login:', data.username);
-            window.location.href = '/';
+            
+            // Điều hướng dựa trên redirect URL
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            } else if (data.userRole === 'A') {
+                window.location.href = '/admin/dashboard';
+            } else if (data.userRole === 'p' || data.userRole === 'b') {
+                window.location.href = '/auth/banned';
+            } else {
+                window.location.href = '/'; // Chuyển hướng về trang chủ nếu không có điều kiện nào
+            }
         } else {
             alert('Login failed: No token received');
         }
@@ -502,6 +524,14 @@ function loginWithGoogle() {
         alert('Login failed: ' + error.message);
     });
 }
+document.addEventListener("DOMContentLoaded", function() {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+        const decoded = jwt_decode(token);
+        document.getElementById("avatarLetter").textContent = decoded.avatar; // Hiển thị chữ cái đầu từ token
+    }
+});
+
 document.addEventListener("DOMContentLoaded", function() {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has("googleLoginSuccess")) {

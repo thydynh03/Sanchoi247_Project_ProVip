@@ -2,6 +2,11 @@ package com.example.SanChoi247.model.entity;
 
 import java.sql.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +18,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Entity
+@Table(name = "users")
 public class User {
     // uid int auto_increment primary key,
     // name varchar(64),
@@ -27,6 +33,8 @@ public class User {
     // password varchar(128),
     // avatar text,
     // role varchar(1)
+     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
     private String name;
     private Date dob;

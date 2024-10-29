@@ -1,17 +1,20 @@
 package com.example.SanChoi247.controller;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.SanChoi247.model.entity.User;
 import com.example.SanChoi247.model.repo.UserRepo;
 
 import jakarta.servlet.http.HttpSession;
-
-import java.sql.Date;
 
 @Controller
 public class UserController {
@@ -187,4 +190,66 @@ public class UserController {
         }
         return "auth/verifyEmail";
     }
+
+       @GetMapping("user/requestFieldOwner")
+    public String requestForm() {
+        return "user/requestFieldOwner"; // Trả về trang HTML
+    }
+
+    // Phương thức POST để xử lý yêu cầu phê duyệt field owner
+    @PostMapping("user/requestFieldOwner")
+public ResponseEntity<String> requestFieldOwner(HttpSession httpSession) {
+    try {
+        User user = (User) httpSession.getAttribute("UserAfterLogin"); // Lấy user từ session
+        int uid = user.getUid(); // Lấy `uid` từ user đăng nhập
+
+        userRepo.requestFieldOwner(uid); // Gửi yêu cầu phê duyệt
+        return ResponseEntity.ok("Request submitted. Waiting for admin approval.");
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Request failed.");
+    }
+}
+
+
+
+
+    // Phương thức GET để trả về trạng thái người dùng
+    @GetMapping("user/getStatus")
+public ResponseEntity<String> getUserStatus(HttpSession httpSession) {
+    try {
+        // Lấy user từ session
+        User user = (User) httpSession.getAttribute("UserAfterLogin");
+        
+        // Kiểm tra nếu người dùng chưa đăng nhập
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in.");
+        }
+
+        int status = user.getStatus();
+        String statusMessage;
+        
+        switch (status) {
+            case 0:
+                statusMessage = "Đang chờ xét duyệt";
+            case 1:
+                statusMessage = "Đang chờ xét duyệt";
+                break;
+            case 2:
+                statusMessage = "Duyệt thành công";
+                break;
+            default:
+                statusMessage = "Trạng thái không xác định";
+        }
+        
+        return ResponseEntity.ok(statusMessage);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lỗi khi lấy trạng thái.");
+
+
+
+        
+    }
+}
 }

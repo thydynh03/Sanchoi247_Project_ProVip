@@ -2,36 +2,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>View Booking</title>
+    <style>
+        /* Font chữ chung cho giao diện */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Style bảng */
+        .table {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #fff;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead th {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 3px solid #0056b3;
+        }
+
+        .table tbody td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        /* Hiệu ứng hover trên hàng */
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        /* Các dòng xen kẽ */
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Style cho nút "Back to Home" */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px); /* Hiệu ứng nổi nhẹ khi hover */
+        }
+
+        /* Đáp ứng trên màn hình nhỏ */
+        @media (max-width: 600px) {
+            .table {
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>View Booking</h1>
-    <table class="table table-bordered" border="1px">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Booking Date</th>
-                <th>Stadium Name</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>VNPAY Data</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="b : ${BookingList}" th:if="${b.status.toString() == 'SUCCESS'}">
-                <td th:text="${b.booking_id}">ID</td>
-                <td th:text="${#temporals.format(b.date, 'yyyy-MM-dd HH:mm:ss')}">Date</td>
-                <td th:text="${b.san.user.ten_san}">Stadium Name</td>
-                <td th:text="${b.scheduleBooking.start_time}">Start Time</td>
-                <td th:text="${b.scheduleBooking.end_time}">End Time</td>
-                <td th:text="${b.totalprice}">Price</td>
-                <td th:text="${b.status.toString()}">Status</td>
-                <td th:text="${b.vnpayData}">VNPAY Data</td>
-            </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/}" class="btn btn-primary">Back to Home</a>
+    <div>
+        <h1>View Booking</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Booking Date</th>
+                    <th>Stadium Name</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <!-- <th>VNPAY Data</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="b : ${BookingList}" th:if="${b.status.toString() == 'SUCCESS'}">
+                    <td th:text="${b.booking_id}">ID</td>
+                    <td th:text="${#temporals.format(b.date, 'yyyy-MM-dd HH:mm:ss')}">Date</td>
+                    <td th:text="${b.san.user.ten_san}">Stadium Name</td>
+                    <td th:text="${b.scheduleBooking.start_time}">Start Time</td>
+                    <td th:text="${b.scheduleBooking.end_time}">End Time</td>
+                    <td th:text="${b.totalprice}">Price</td>
+                    <td th:text="${b.status.toString()}">Status</td>
+                    <!-- <td th:text="${b.vnpayData}">VNPAY Data</td> -->
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/}" class="btn">Back to Home</a>
+    </div>
 </body>
 </html>

@@ -1,3 +1,4 @@
+ÂN NGUYỄN
 <!-- search-result.html -->
 <!DOCTYPE html>
 <html lang="en">
@@ -269,7 +270,10 @@
                         <a class="nav-link" th:href="@{/ShowForOwners}">FOR OWNERS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">BLOG</a>
+                        <a class="nav-link" th:href="@{/Box}">BOX CHAT</a>
+                    </li>
+                    <li th:if="${session.UserAfterLogin != null}" class="nav-item">
+                        <a class="nav-link" th:href="@{/blog}">BLOG</a>
                     </li>
                     <li th:if="${session.UserAfterLogin == null}" class="nav-item">
                         <a class="nav-link" th:href="@{/Login}" style="color: black; background-color: #759C83; border-radius: 10px;">SIGN IN</a>
@@ -339,7 +343,7 @@
     
         <div class="row" data-aos="fade-up" data-aos-duration="1000">
 
-            <!-- Add the class `popular-item` to each card -->
+            <!-- Add the class popular-item to each card -->
             <div th:if="${userList != null}" th:each="San : ${userList}" class="col-md-4 mb-4 popular-item">
                 <div class="card">
                     <div th:id="'carouselExample' + ${San.uid}" class="carousel slide card-img-top" data-bs-ride="carousel">

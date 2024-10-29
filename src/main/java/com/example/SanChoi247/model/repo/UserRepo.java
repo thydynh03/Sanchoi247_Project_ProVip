@@ -650,4 +650,66 @@ public class UserRepo {
             return ps.executeUpdate(); // Trả về số hàng được cập nhật
         }
     }
+    public void approveFieldOwnerRequest(int uid, boolean isApproved) throws Exception {
+        Class.forName(Baseconnection.nameClass);
+        Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username, Baseconnection.password);
+        PreparedStatement ps;
+        if (isApproved) {
+            ps = con.prepareStatement("UPDATE users SET status = ?, role = ? WHERE uid = ?");
+            ps.setInt(1, 2); // 2: Approved
+            ps.setString(2, "C"); // 'C': Field Owner
+        } else {
+            ps = con.prepareStatement("UPDATE users SET status = ? WHERE uid = ?");
+            ps.setInt(1, 0); // 0: Default
+        }
+        ps.setInt(isApproved ? 3 : 2, uid);
+        ps.executeUpdate();
+        ps.close();
+        con.close();
+    }
+    public List<User> getUsersByStatus(int status) throws Exception {
+        List<User> userList = new ArrayList<>();
+        Class.forName(Baseconnection.nameClass);
+        Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username, Baseconnection.password);
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE status = ?");
+        ps.setInt(1, status);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int uid = rs.getInt("uid");
+            String name = rs.getString("name");
+            Date dob = rs.getDate("dob");
+            char gender = rs.getString("gender").charAt(0);
+            String phone = rs.getString("phone");
+            String email = rs.getString("email");
+            String username = rs.getString("username");
+            String password = rs.getString("password");
+            String avatar = rs.getString("avatar");
+            String ten_san = rs.getString("ten_san");
+            String address = rs.getString("address");
+            String img_san1 = rs.getString("img_san1");
+            String img_san2 = rs.getString("img_san2");
+            String img_san3 = rs.getString("img_san3");
+            String img_san4 = rs.getString("img_san4");
+            String img_san5 = rs.getString("img_san5");
+            char role = rs.getString("role").charAt(0);
+            int statusRetrieved = rs.getInt("status");
+            
+            User user = new User(uid, name, dob, gender, phone, email, username, password, avatar, ten_san, address, img_san1, img_san2, img_san3, img_san4, img_san5, statusRetrieved, role);
+            userList.add(user);
+        }
+        rs.close();
+        ps.close();
+        con.close();
+        return userList;
+    }
+    public void requestFieldOwner(int uid) throws Exception {
+        Class.forName(Baseconnection.nameClass);
+        Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username, Baseconnection.password);
+        PreparedStatement ps = con.prepareStatement("UPDATE users SET status = ? WHERE uid = ?");
+        ps.setInt(1, 1); // 1: Pending approval
+        ps.setInt(2, uid);
+        ps.executeUpdate();
+        ps.close();
+        con.close();
+    }
 }

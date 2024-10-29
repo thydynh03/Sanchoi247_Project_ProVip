@@ -1,13 +1,16 @@
 package com.example.SanChoi247.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.ui.Model;
-
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +23,6 @@ import com.example.SanChoi247.model.repo.UserRepo;
 import com.example.SanChoi247.service.EmailService;
 
 import jakarta.servlet.http.HttpSession;
-
 @Controller
 public class AdminController {
     @Autowired
@@ -29,7 +31,8 @@ public class AdminController {
     UserRepo userRepo;
     @Autowired
     EmailService emailService;
-
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
     @GetMapping(value = "admin/dashboard")
     public String dashboardPage(Model model) throws Exception {
         AdminStatistics statistics = adminRepo.getStatisticsForAdmin();
@@ -194,5 +197,41 @@ public class AdminController {
             emailService.sendEmail(email, subject, emailContent);
         }
         return "redirect:/ViewActiveOwner";
+    }
+        @GetMapping("admin/pendingRequests")
+public ResponseEntity<List<User>> getPendingRequests() {
+    try {
+        List<User> pendingUsers = userRepo.getUsersByStatus(1); // Trạng thái 1 là "Đang chờ xét duyệt"
+        return ResponseEntity.ok(pendingUsers);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+}
+
+    // Trả về trang HTML approveFieldOwner.html
+    @GetMapping("admin/approveFieldOwner")
+    public String showApprovalPage() {
+        return "admin/approveFieldOwner"; // Đây là file approveFieldOwner.html trong thư mục templates/admin
+    }
+
+    // Phương thức POST để duyệt hoặc từ chối yêu cầu làm Field Owner
+    @PostMapping("admin/approveFieldOwner")
+    public ResponseEntity<String> approveFieldOwner(@RequestParam int uid, @RequestParam boolean isApproved) {
+        String statusMessage;
+        try {
+            userRepo.approveFieldOwnerRequest(uid, isApproved);
+            if (isApproved) {
+                statusMessage = "Trạng thái: Đã chấp nhận";
+            } else {
+                statusMessage = "Trạng thái: Từ chối";
+            }
+            // Gửi thông báo qua WebSocket đến client
+            messagingTemplate.convertAndSend("/topic/statusUpdate", statusMessage);
+            return ResponseEntity.ok(statusMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Approval failed.");
+        }
     }
 }

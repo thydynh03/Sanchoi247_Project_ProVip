@@ -263,7 +263,6 @@
                                 placeholder="Nhập tên của bạn ở đây..." th:value="${session.UserAfterLogin.name}">
                         </div>
                     </div>
-
                     <div class="mb-3">
                         <label for="dob" class="form-label">Date of Birth:</label>
                         <div class="input-group">
@@ -271,7 +270,9 @@
                             <input name="dob" class="form-control" type="date" id="dob"
                                 th:value="${session.UserAfterLogin.dob}" required placeholder="YYYY-MM-DD">
                         </div>
+                        <div id="dobError" style="color: red; font-size: 14px; display: none;">Invalid date of birth. You must be over 18 years old.</div>
                     </div>
+                    
 
                     <div class="mb-3">
                         <label for="gender" class="form-label">Gender:</label>
@@ -455,6 +456,20 @@
             </div>
 
             <script>
+                document.getElementById("dob").addEventListener("input", function () {
+    const dobInput = document.getElementById("dob").value;
+    const dobError = document.getElementById("dobError");
+    const dobDate = new Date(dobInput);
+    const today = new Date();
+    const age = today.getFullYear() - dobDate.getFullYear();
+
+    // Kiểm tra nếu dưới 18 tuổi hoặc ngày sinh lớn hơn ngày hiện tại
+    if (dobDate > today || age < 18 || (age === 18 && (today.getMonth() < dobDate.getMonth() || (today.getMonth() === dobDate.getMonth() && today.getDate() < dobDate.getDate())))) {
+        dobError.style.display = "block";
+    } else {
+        dobError.style.display = "none";
+    }
+});
                 function checkFile() {
                     var fileInput = document.getElementById('imageInput');
                     var submitButton = document.getElementById('submitButton');
