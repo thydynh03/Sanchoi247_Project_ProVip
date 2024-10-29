@@ -1,0 +1,176 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            color: #555;
+        }
+
+        #chat {
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            width: 80vh;
+            word-wrap: break-word;
+        }
+
+        #messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+
+        #inputArea {
+            display: flex;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        #message {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        #sendButton {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #sendButton:hover {
+            background-color: #0056b3;
+        }
+
+        .chat-message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .chat-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-content .name {
+            font-weight: bold;
+        }
+
+        .chat-content .text {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to SanChoi247 chat group!</h1>
+    <div id="chat">
+        <div id="messages"></div>
+        <div id="inputArea">
+            <input id="message" type="text" placeholder="Type a message" />
+            <button id="sendButton" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        let ws;
+
+        function connectWebSocket() {
+            const token = getTokenFromSession();  // Lấy token từ localStorage
+            if (!token) {
+                alert("Token not found. Please login again.");
+                return;
+            }
+
+            ws = new WebSocket('ws://localhost:8081', token); // Gửi token như một protocol
+
+            ws.onopen = () => {
+                console.log('Connected to server');
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                console.log('Received from server:', data);
+
+                if (data.type === 'error') {
+                    alert(data.message);
+                }
+
+                if (data.type === 'serverMessage') {
+                    document.getElementById('messages').innerHTML += `<p class="server-message">${data.message}</p>`;
+                    scrollToBottom();
+                }
+
+                if (data.type === 'chat') {
+                    const avatarImg = data.avatar ? `<img class="avatar" src="${data.avatar}" alt="avatar">` : '';
+                    document.getElementById('messages').innerHTML += `
+                        <div class="chat-message">
+                            ${avatarImg}
+                            <div class="chat-content">
+                                <p class="name">${data.sender}</p>
+                                <p class="text">${data.message}</p>
+                            </div>
+                        </div>`;
+                    scrollToBottom();
+                }
+            };
+        }
+
+        window.onload = connectWebSocket;
+
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            if (message.trim() !== '') {
+                ws.send(JSON.stringify({ type: 'chat', text: message }));
+                document.getElementById('message').value = '';
+            }
+        }
+
+        // Lưu token vào localStorage
+        function saveToken(token) {
+            localStorage.setItem('token', token);
+        }
+
+        // Lấy token từ localStorage
+        function getTokenFromSession() {
+            return localStorage.getItem('token');
+        }
+
+        function scrollToBottom() {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html> -->
