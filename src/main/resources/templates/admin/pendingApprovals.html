@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pending Field Approvals</title>
+</head>
+<body>
+    <h2>Pending Field Approvals</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Field Name</th>
+                <th>Address</th>
+                <th>Images</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="field : ${pendingFields}">
+                <td th:text="${field.ten_san}"></td>
+                <td th:text="${field.address}"></td>
+                <td>
+                    <img th:src="${field.img_san1}" alt="Image 1" width="50">
+                    <img th:src="${field.img_san2}" alt="Image 2" width="50">
+                    <img th:src="${field.img_san3}" alt="Image 3" width="50">
+                    <img th:src="${field.img_san4}" alt="Image 4" width="50">
+                    <img th:src="${field.img_san5}" alt="Image 5" width="50">
+                </td>
+                <td>
+                    <form action="/admin/approveField" method="post" style="display:inline;">
+                        <input type="hidden" name="uid" th:value="${field.uid}">
+                        <button type="submit" name="isApproved" value="true">Approve</button>
+                    </form>
+                    <form action="/admin/approveField" method="post" style="display:inline;">
+                        <input type="hidden" name="uid" th:value="${field.uid}">
+                        <button type="submit" name="isApproved" value="false">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Field Approvals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: url("https://cdn-media.sforum.vn/storage/app/media/wp-content/uploads/2023/06/hinh-nen-bong-da-thumb.jpg");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden; /* Prevent horizontal overflow */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px; /* Expand container width to accommodate the table */
+        }
+
+        .card {
+            background-color: #ebf0ed;
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #759C83;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #759C83;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-approve, .btn-reject {
+            padding: 5px 10px;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-approve {
+            background-color: #759C83;
+        }
+
+        .btn-reject {
+            background-color: #dc3545;
+        }
+
+        .btn-approve:hover {
+            background-color: #607d6d;
+        }
+
+        .btn-reject:hover {
+            background-color: #a71d2a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2>Pending Field Approvals</h2>
+        <table>
+            <tr>
+                <th>UID</th>
+                <th>Full Name</th>
+                <th>Field Name</th>
+                <th>Address</th>
+                <th>Image 1</th>
+                <th>Image 2</th>
+                <th>Image 3</th>
+                <th>Image 4</th>
+                <th>Image 5</th>
+                <th>Actions</th>
+            </tr>
+            <tr th:each="field : ${pendingFields}">
+                <td th:text="${field.uid}">UID</td>
+                <td th:text="${field.name}">Full Name</td>
+                <td th:text="${field.ten_san}">Field Name</td>
+                <td th:text="${field.address}">Address</td>
+                <td><img th:src="${field.img_san1}" alt="Image 1"></td>
+                <td><img th:src="${field.img_san2}" alt="Image 2"></td>
+                <td><img th:src="${field.img_san3}" alt="Image 3"></td>
+                <td><img th:src="${field.img_san4}" alt="Image 4"></td>
+                <td><img th:src="${field.img_san5}" alt="Image 5"></td>
+                <td>
+                    <form action="/admin/approveField" method="post" style="display:inline;">
+                        <input type="hidden" name="uid" th:value="${field.uid}">
+                        <button type="submit" name="approve" value="true" class="btn-approve">Approve</button>
+                    </form>
+                    <form action="/admin/approveField" method="post" style="display:inline;">
+                        <input type="hidden" name="uid" th:value="${field.uid}">
+                        <button type="submit" name="approve" value="false" class="btn-reject">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
