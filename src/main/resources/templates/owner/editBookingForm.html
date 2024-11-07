@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Booking</title>
+</head>
+<body>
+    <h2>Edit Booking</h2>
+
+    <form th:action="@{/editBooking}" th:object="${booking}" method="post">
+        <input type="hidden" th:field="*{booking_id}" />
+
+        <label for="start_time">Start Time:</label>
+        <input type="time" th:field="*{start_time}" /><br/>
+        
+        <label for="end_time">End Time:</label>
+        <input type="time" th:field="*{end_time}" /><br/>
+        
+
+        <label for="status">Status:</label>
+        <input type="text" th:field="*{status}" /><br/>
+
+        <label for="price">Price:</label>
+        <input type="text" th:field="*{price}" /><br/>
+
+        <label for="booking_date">Booking Date:</label>
+        <input type="date" th:field="*{booking_date}" /><br/>
+
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>
