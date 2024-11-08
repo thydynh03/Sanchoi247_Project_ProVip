@@ -1,46 +1,366 @@
+<!DOCTYPE html>
 <html lang="en">
-
-</html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ViewDetail</title>
-    <!-- <link rel="stylesheet" href="/css/viewDetail.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .location-icon {
+            color: #759C83; /* Màu sắc */
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+            vertical-align: middle; /* Căn chỉnh biểu tượng với văn bản */
+            font-size: 1.2em; /* Kích thước biểu tượng */
+        }
+
+
+        .navbar-custom {
+            background-color: #ebf0ed;
+            padding: 20px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 10px 20px;
+            font-weight: 500;   
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .navbar-custom {
+            background-color: #ebf0ed;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 10px 20px;
+            font-weight: 500;   
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu .dropdown-item {
+            font-size: 18px;
+            font-weight: 500;
+            color: #759C83;
+            padding: 15px 20px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1;
+            color: #759C83;
+            transform: translateY(-2px);
+        }
+
+        .dropdown-item.logout {
+            color: red;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #759C83; /* Change color on hover */
+            transform: translateY(-2px); /* Move up slightly on hover */
+        }
+
+        .navbar-brand img {
+            height: 60px;
+            width: 60px; /* Đảm bảo chiều rộng bằng chiều cao */
+            border-radius: 50%; /* Đặt border-radius thành 50% để tạo hình tròn */
+        }
+        .sports-dropdown .dropdown-menu {
+            display: none; /* Ẩn menu xổ xuống mặc định */
+        }
+
+        .sports-dropdown:hover .dropdown-menu {
+            display: block; /* Hiện menu khi rê chuột vào mục SPORTS */
+        }
+
+
+        .navbar-brand {
+            margin-right: auto;
+        }
+
+        .navbar-toggler {
+            border-color: #000;
+            padding: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        /* Các tùy chọn trong dropdown */
+        .dropdown-menu .dropdown-item {
+            font-size: 18px; /* Tăng kích thước chữ */
+            font-weight: 500; /* Làm cho chữ đậm */
+            color: #333; /* Màu chữ */
+            padding: 15px 20px; /* Tăng khoảng cách padding */
+        }
+
+        /* Thay đổi khi người dùng di chuột vào */
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1; /* Màu nền khi hover */
+            color: #000; /* Màu chữ khi hover */
+        }
+
+        /* Tùy chọn thêm màu sắc đặc biệt cho nút đăng xuất */
+        .dropdown-item.logout {
+            color: red; /* Làm cho chữ đăng xuất có màu đỏ */
+            font-weight: bold; /* Tăng độ đậm chữ */
+        }
+        .location-icon {
+            color: #759C83;
+            margin-right: 5px;
+            vertical-align: middle;
+            font-size: 1.2em;
+        }
+
+        .navbar-custom {
+            background-color: #ebf0ed;
+            padding: 20px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar-brand img {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+        }
+
+        .banner-video-2 {
+            margin-top: 15px;
+            width: 100%;
+            height: auto;
+        }
+
+        .title-h1 {
+            color: #759C83;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .card-body {
+            background-color: #ebf0ed;
+        }
+
+        .btn {
+            background-color: #759C83;
+            color: white;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #607d6d;
+        }
+
+        .form-control-lg {
+            height: 55px;
+        }
+
+        .btn-search {
+            background-color: #759C83;
+            color: white;
+            height: 55px;
+            font-size: 18px;
+        }
+
+        .search-container {
+            background-color: #ebf0ed;
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 265px;
+            object-fit: cover;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #759C83;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .popular-item {
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 
-<body>
-    <h1>VIEW DETAIL</h1>
-    <table border="1px">
-        <thead>
-            <tr>
+<body style="padding-top: 56px; background-color: #f9f9f9;">
 
-                <th>Type</th>
-                <th>Location</th>
-                <th>Size</th>
-                <th>Img</th>
-                <th>Booking</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="san : ${SanDetail}">
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">
+                <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728240612/nptm9pv1ifhzdrogjfk8.webp" alt="Logo"> <!-- Replace with your logo URL -->
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">HOME</a>
+                    </li>
+                    <li class="nav-item dropdown sports-dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="sportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            SPORTS
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sportsDropdown">
+                            <li><a class="dropdown-item" href="#">FOOTBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">PICKLEBALL</a></li>
+                            <li><a class="dropdown-item" href="#">BASKETBALL</a></li>
+                            <li><a class="dropdown-item" href="#">VOLLEYBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TABLE TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">GOLF</a></li>
+                            <li><a class="dropdown-item" href="#">BADMINTON</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/ShowIntroduction}">INTRODUCTION</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">POLICY</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">TERMS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/ShowForOwners}">FOR OWNERS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">BLOG</a>
+                    </li>
+                    <li th:if="${session.UserAfterLogin == null}" class="nav-item">
+                        <a class="nav-link" th:href="@{/Login}" style="color: black; background-color: #759C83; border-radius: 10px;">SIGN IN</a>
+                    </li>
+                    <!-- User avatar and dropdown -->
+                    <li th:if="${session.UserAfterLogin != null}" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img th:src="${session.UserAfterLogin.avatar}" alt="Avatar" class="avatar"> <!-- Avatar from session -->
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role.toString == 'A'}">
+                                <a class="dropdown-item" th:href="@{/admin/dashboard}">Dashboard</a>
+                            </li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role.toString == 'C'}">
+                                <a class="dropdown-item" th:href="@{/admin/dashboard}">See Stadium</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/ShowBookingByUserId}">See Booking</a></li>
+                            <li><a class="dropdown-item" th:href="@{/ShowHelp&Support}">Help & Support</a></li>
+                            <li><a class="dropdown-item" th:href="@{/ShowGiveFeedback}">Give Feedback</a></li>
+                            <li><a class="dropdown-item" th:href="@{/Logout}" style="color: #759C83;">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-                <td th:text="${san.LoaiSan.loai_san_type}">Type</td>
-                <td th:text="${san.vi_tri_san}">Location</td>
-                <td th:text="${san.Size.size}">Size</td>
-                <td><img th:src="${san.img}" style="width: auto;" height="50px"></td>
-                <td><a th:href="@{/ShowDetailLocation/{id}(id=${san.san_id})}">View</a></td>
-                <td th:if="${session.UserAfterLogin != null && (session.UserAfterLogin.uid == san.user.uid)}">
-                    <form th:action="@{/showAddScheduleBooking}" method="post">
-                        <input type="hidden" name="sanId" th:value="${san.san_id}" />
-                        <button type="submit">Add schedule</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/}">Back to home</a>
+    <!-- Search Section -->
+    <div class="container mt-5 mb-5" data-aos="fade-up" data-aos-duration="1000">
+        <div class="card search-container"style="margin-top: 110px;">
+            <div class="card-body">
+                <form class="row g-3" th:action="@{/SearchSanTheoKhungGio}" method="post">
+                    <div class="col-md-3">
+                        <input type="date" name="SearchDate" class="form-control form-control-lg" placeholder="Date" aria-label="Date" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="time" name="StartTime" class="form-control form-control-lg" placeholder="Start Time" aria-label="Start Time" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="time" name="EndTime" class="form-control form-control-lg" placeholder="End Time" aria-label="End Time" required>
+                    </div>
+                    <div class="col-md-3 d-grid">
+                        <button type="submit" class="btn btn-search">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
+    <!-- Card List Section -->
+    <div class="container">
+        <div class="title-h1">
+            <h1>LIST</h1>
+        </div>
+
+        <div class="row" data-aos="fade-up" data-aos-duration="1000">
+            <div th:each="san : ${SanDetail}" class="col-md-4 mb-4 popular-item">
+                <div class="card">
+                    <div th:id="'carouselExample' + ${san.san_id}" class="carousel slide card-img-top" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img th:src="${san.img}" class="d-block w-100" alt="..."/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${san.LoaiSan.loai_san_type}">Card title</h5>
+                        <p class="card-text">
+                            <i class="fas fa-map-marker-alt location-icon"></i>
+                            <span th:text="${san.Size.size}">Size here</span>
+                        </p>
+                        <p class="card-text">
+                            <i class="fas fa-map-marker-alt location-icon"></i>
+                            <span th:text="${san.vi_tri_san}">Location here</span>
+                        </p>
+
+                        <div class="d-flex justify-content-between">
+                            <a th:href="@{/ShowDetailLocation/{id}(id=${san.san_id})}" class="btn btn-success">View</a>
+                            <form th:if="${session.UserAfterLogin != null && (session.UserAfterLogin.uid == san.user.uid)}" th:action="@{/showAddScheduleBooking}" method="post">
+                                <input type="hidden" name="sanId" th:value="${san.san_id}" />
+                                <button type="submit" class="btn btn-success">Add schedule</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

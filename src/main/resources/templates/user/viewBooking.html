@@ -1,0 +1,151 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #759C83;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table thead th, .table tbody td {
+            border: 1px solid #ddd; /* Add border for each cell */
+            padding: 12px 15px;
+            color: #333;
+            text-align: left;
+        }
+
+        .table thead th {
+            background-color: #759C83;
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+        }
+
+        .table tbody tr {
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f2f3f7;
+        }
+
+        .refund-button {
+            background-color: #759C83;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+        .refund-button:hover {
+            background-color: #56796d;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            margin: 20px auto;
+            background-color: #759C83;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            width: 150px;
+        }
+
+        .btn-primary:hover {
+            background-color: #56796d;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center mb-4" style="color: #759C83; margin-top: 30px; margin-bottom: 30px;text-align: center;">VIEW BOOKING</h1>
+    <table class="table table-bordered table-hover table-striped" id="timeSlotsTable">
+        <thead>
+            <tr>
+                <th>Booking Date</th>
+                <th>Stadium Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Cancel</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="b : ${BookingList}" th:if="${b.status.toString() == 'SUCCESS'}">
+                <td th:text="${#temporals.format(b.date, 'yyyy-MM-dd HH:mm:ss')}">Date</td>
+                <td th:text="${b.san.user.ten_san}">Stadium Name</td>
+                <td th:text="${b.scheduleBooking.start_time}">Start Time</td>
+                <td th:text="${b.scheduleBooking.end_time}">End Time</td>
+                <td th:text="${b.scheduleBooking.booking_date}"></td>
+                <td th:text="${b.totalprice}">Price</td>
+                <td th:text="${b.status.toString()}">Status</td>
+                <td>
+                    <form th:action="@{/requestRefund}" method="post">
+                        <input type="hidden" name="booking_id" th:value="${b.booking_id}" />
+                        <button type="submit" class="refund-button" th:attr="data-start-time=${#temporals.format(b.scheduleBooking.booking_date, 'yyyy-MM-dd')} + 'T' + ${#temporals.format(b.scheduleBooking.start_time, 'HH:mm:ss')}">
+                            Cancel
+                        </button>
+                    </form>
+                </td>                
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/}" class="btn btn-primary">Back to Home</a>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const refundButtons = document.querySelectorAll(".refund-button");
+    
+            refundButtons.forEach(button => {
+                const startTimeString = button.getAttribute("data-start-time");
+                const startTime = new Date(startTimeString); // Parse the start time in ISO format
+                const currentTime = new Date(); // Current time in local timezone
+    
+                console.log("Start Time:", startTime);
+                console.log("Current Time:", currentTime);
+    
+                // Calculate the difference in minutes
+                const diffInMinutes = (startTime - currentTime) / (1000 * 60);
+                console.log("Difference in minutes:", diffInMinutes);
+    
+                // Hide the button if the difference is 30 minutes or less
+                if (diffInMinutes <= 30) {
+                    button.style.display = "none";
+                }
+            });
+        });
+    </script>
+    
+    
+</body>
+</html>

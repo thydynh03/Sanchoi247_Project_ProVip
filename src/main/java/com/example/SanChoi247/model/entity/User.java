@@ -44,7 +44,8 @@ public class User {
     private String img_san3;
     private String img_san4;
     private String img_san5;
-    private int status; // 0.mặc định, 1.đang chờ duyệt, 2.được duyệt
+    private int status; // 0.mặc định của user, 1.đang chờ duyệt lên owner, 2.được duyệt lên owner,
+                        // 3.đang chờ duyệt đăng sân, 4.được duyệt tất cả
     private char role; // C là owner, U là User, A là admin
 
     public User(String name, Date dob, char gender, String phone, String email, String username, String password,

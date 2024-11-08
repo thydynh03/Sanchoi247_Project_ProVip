@@ -200,7 +200,7 @@
         /* The text overlay (adjust position as needed) */
         .overlay-text {
             position: absolute;
-            top: 45%; /* Adjust this value to control vertical alignment */
+            top: 35%; /* Adjust this value to control vertical alignment */
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 24px;
@@ -269,6 +269,58 @@
             color: #666;
         }
 
+        .contact-section {
+            background-position: center;
+            background-size: cover;
+            padding: 50px 0;
+        }
+
+        .contact-form {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .contact-form h3 {
+            color: #759C83;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .contact-form .form-control {
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #ccc;
+        }
+
+        .contact-form .form-control:focus {
+            border-color: #43cea2;
+            box-shadow: 0 0 5px rgba(67, 206, 162, 0.5);
+        }
+
+        .contact-form button {
+            background: linear-gradient(90deg, #759C83 0%, #759C83 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 30px;
+            transition: background 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background: linear-gradient(90deg, #759C83 0%, #759C83 100%);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        
+
+
+
     </style>
 </head>
 <body style="padding-top: 56px;">
@@ -317,7 +369,7 @@
                         <a class="nav-link" href="#">BLOG</a>
                     </li>
                     <li th:if="${session.UserAfterLogin == null}" class="nav-item">
-                        <a class="nav-link" th:href="@{/Login}">SIGN IN</a>
+                        <a class="nav-link" th:href="@{/Login}" style="color: black; background-color: #759C83; border-radius: 10px;">SIGN IN</a>
                     </li>
                     <!-- User avatar and dropdown -->
                     <li th:if="${session.UserAfterLogin != null}" class="nav-item dropdown">
@@ -326,8 +378,11 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Help & Support</a></li>
-                            <li><a class="dropdown-item" href="#">Give Feedback</a></li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role.toString == 'A'}">
+                                <a class="dropdown-item" th:href="@{/admin/dashboard}">Dashboard</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/ShowHelp&Support}">Help & Support</a></li>
+                            <li><a class="dropdown-item" th:href="@{/ShowGiveFeedback}">Give Feedback</a></li>
                             <li><a class="dropdown-item" th:href="@{/Logout}" style="color: #759C83;">Log Out</a></li>
                         </ul>
                     </li>
@@ -360,8 +415,8 @@
                 <div class="col-md-6 mb-4">
                     <div class="card feature-card">
                         <div class="card-body text-left">
-                            <img src="calendar-icon.png" alt="Calendar" class="feature-icon">
                             <h4 class="card-title">View Field Status</h4>
+                            <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1729252888/xhx0y0wh5zk2huzz3v3f.png" alt="">
                             <p class="card-text">sanchoi247 helps you manage your sports fields for badminton, football, and tennis. Owners can view which fields are available or booked, resolve bookings easily, and monitor schedules efficiently.</p>
                         </div>
                     </div>
@@ -370,9 +425,29 @@
                 <div class="col-md-6 mb-4">
                     <div class="card feature-card">
                         <div class="card-body text-left">
-                            <img src="booking-icon.png" alt="Booking" class="feature-icon">
                             <h4 class="card-title">Manage Bookings</h4>
+                            <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1729253450/yszecahqvlqbetepbrd9.png" alt="">
                             <p class="card-text">sanchoi247 provides booking management features with flexibility in daily or monthly scheduling. Track and approve bookings, and automate reminders to save time for both customers and business owners.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-left">
+                            <h4 class="card-title">Revenue statistics</h4>
+                            <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1729253503/ka2qfiooy8abj4tghzef.png" alt="">
+                            <p class="card-text">SanChoi247 provides detailed reports and statistics on revenue, number of bookings, popular services and many other business metrics. This helps you evaluate business performance, optimize operations and make smart decisions.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-left">
+                            <h4 class="card-title">Customer management</h4>
+                            <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1729253617/i65kvxfrp0oy1f6smium.png" alt="">
+                            <p class="card-text">SanChoi247 allows you to store customer information, transaction history and personal offers. You can create a customer loyalty program, send notifications and the latest news to increase interaction and create customer satisfaction.</p>
                         </div>
                     </div>
                 </div>
@@ -381,6 +456,97 @@
             <!-- You can add more rows and cards as needed -->
         </div>
     </div>
+
+    <div class="features-section">
+        <div class="container text-center">
+            <h1 class="section-title">Features of sanchoi247 - Scheduling software</h1>
+            <p class="section-description">Managing your sports fields for badminton, football, and tennis has never been easier. Take advantage of sanchoi247's features and conveniences to enhance business efficiency, improve customer satisfaction, and achieve success in your business.</p>
+            
+            <div class="row mt-5">
+                <!-- Card 1 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-left">
+                            <h4 class="card-title">Easy scheduling</h4>
+                            <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1729253660/nc7qo6qipkh8dmtsersk.png" alt="">
+                            <p class="card-text">sanchoi247 can book online quickly and conveniently. With just a few simple steps, you can choose the date, time and type of service you want and confirm your booking right on ALOBO. No more calling or going directly to the course to book an appointment.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-left">
+                            <h4 class="card-title">Search Nearby Courtyards</h4>
+                            <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1729253703/soojmcrnmw6qzw7zgfxi.png" alt="">
+                            <p class="card-text">With this feature, you can search for service locations near your current location. Just enter the location or allow ALOBO to access your location, you will get a list of locations closest to you. You can view detailed information about the locations, including reviews and ratings from other users.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-left">
+                            <h4 class="card-title">Reminders and notifications</h4>
+                            <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1729253734/tiybfuwnnpgl2j8yjx7z.png" alt="">
+                            <p class="card-text">No more worries about missing appointments! SanChoi247 will automatically send notifications and reminders about your appointments, helping you adjust your time easily and conveniently.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-left">
+                            <h4 class="card-title">Search for discount codes</h4>
+                            <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1729253766/xtih9beeo00su7rhzqnc.png" alt="">
+                            <p class="card-text">SanChoi247 creates a voucher hunting feature, helping you search and apply attractive vouchers from partner stores and services. You can receive exclusive offers and experience services at the best prices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- You can add more rows and cards as needed -->
+        </div>
+    </div>
+
+    <div class="contact-section" style="background-image: url('https://res.cloudinary.com/dvwn7bgut/image/upload/v1729254250/bexo0tzqnnqb7vwvlv1r.jpg'); background-size: cover; background-position: center; padding: 50px 0;">
+        <div class="container d-flex justify-content-center align-items-center" style="min-height: 400px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="contact-form p-5 rounded shadow" style="background-color: white; max-width: 600px; margin: auto;">
+                        <h3 class="mb-4 text-center">CONTACT WITH SANCHOI247</h3>
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" placeholder="Input your name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone:</label>
+                                <input type="text" class="form-control" id="phone" placeholder="Input your number phone">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" placeholder="Input your email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="stadiumName" class="form-label">Name Stadium:</label>
+                                <input type="text" class="form-control" id="stadiumName" placeholder="Input your name stadium">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message for SanChoi247:</label>
+                                <textarea class="form-control" id="message" rows="4" placeholder="Enter your message"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary px-5 py-2" style="background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%); border: none; border-radius: 30px;">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
     
 
     <footer class="footerComponent-footer">

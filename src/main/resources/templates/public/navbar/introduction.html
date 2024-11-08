@@ -343,7 +343,7 @@
                         <a class="nav-link" href="#">BLOG</a>
                     </li>
                     <li th:if="${session.UserAfterLogin == null}" class="nav-item">
-                        <a class="nav-link" th:href="@{/Login}">SIGN IN</a>
+                        <a class="nav-link" th:href="@{/Login}" style="color: black; background-color: #759C83; border-radius: 10px;">SIGN IN</a>
                     </li>
                     <!-- User avatar and dropdown -->
                     <li th:if="${session.UserAfterLogin != null}" class="nav-item dropdown">
@@ -352,8 +352,15 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Help & Support</a></li>
-                            <li><a class="dropdown-item" href="#">Give Feedback</a></li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role.toString == 'A'}">
+                                <a class="dropdown-item" th:href="@{/admin/dashboard}">Dashboard</a>
+                            </li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role.toString == 'C'}">
+                                <a class="dropdown-item" th:href="@{/admin/dashboard}">See Stadium</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/ShowBookingByUserId}">See Booking</a></li>
+                            <li><a class="dropdown-item" th:href="@{/ShowHelp&Support}">Help & Support</a></li>
+                            <li><a class="dropdown-item" th:href="@{/ShowGiveFeedback}">Give Feedback</a></li>
                             <li><a class="dropdown-item" th:href="@{/Logout}" style="color: #759C83;">Log Out</a></li>
                         </ul>
                     </li>

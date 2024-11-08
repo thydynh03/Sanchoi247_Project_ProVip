@@ -1,14 +1,133 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Kết quả thanh toán</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Payment Result - SanChoi247</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url("https://cdn-media.sforum.vn/storage/app/media/wp-content/uploads/2023/06/hinh-nen-bong-da-thumb.jpg");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            color: #759C83;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .status-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            background-color: #28a745;
+        }
+
+        .error {
+            background-color: #dc3545;
+        }
+
+        .checkmark, .cross {
+            color: white;
+            font-size: 36px;
+            line-height: 60px;
+            text-align: center;
+        }
+
+        .list-unstyled-custom {
+            text-align: left;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #759C83;
+            border-color: #759C83;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #618973;
+            border-color: #618973;
+        }
+
+        .alert {
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container text-center mt-5">
+    <div class="container">
         <h1 th:text="${message}"></h1>
         <p th:text="${error}"></p>
-        <a href="/" class="btn btn-primary">Quay về Trang Chủ</a>
+
+        <!-- Status Icon -->
+        <div th:if="${booking != null}">
+            <div th:if="${success}">
+                <div class="status-icon success">
+                    <span class="checkmark">&#10003;</span>
+                </div>
+            </div>
+            <div th:if="${not success}">
+                <div class="status-icon error">
+                    <span class="cross">&#10006;</span>
+                </div>
+            </div>
+
+            <h2>Booking Information:</h2>
+            <ul class="list-unstyled list-unstyled-custom">
+                <li><strong>Booking ID:</strong> <span th:text="${booking.booking_id}"></span></li>
+                <li><strong>Date:</strong> <span th:text="${booking.date}"></span></li>
+                <li><strong>User:</strong> <span th:text="${booking.user.name}"></span></li>
+                <li><strong>Field Type:</strong> <span th:text="${booking.san.loaiSan.loai_san_type}"></span></li>
+                <li><strong>Field Location:</strong> <span th:text="${booking.san.vi_tri_san}"></span></li>
+                <li><strong>Size:</strong> <span th:text="${booking.san.Size.size}"></span></li>
+                <li><strong>Start Time:</strong> <span th:text="${booking.scheduleBooking.start_time}"></span></li>
+                <li><strong>End Time:</strong> <span th:text="${booking.scheduleBooking.end_time}"></span></li>
+                <li><strong>Booking Date:</strong> <span th:text="${booking.scheduleBooking.booking_date}"></span></li>
+                <li><strong>Total Price:</strong> <span th:text="${booking.totalprice}"></span></li>
+                <li><strong>Status:</strong> <span th:text="${booking.status}"></span></li>
+            </ul>
+        </div>
+
+        <a href="/" class="btn btn-primary">Return Home</a>
     </div>
 </body>
 </html>

@@ -45,7 +45,10 @@ public class Booking {
         TOTALLY_REFUNDED(3),
         PARTIALLY_REFUNDED(4),
         PENDING_TOTAL_REFUND(5),
-        PENDING_PARTIAL_REFUND(6);
+        PENDING_PARTIAL_REFUND(6),
+        PENDING_ADMINAPVORE_REFUND(7),
+        REFUND_SUCCESS(8),
+        ;
 
         private final int value;
 
@@ -66,4 +69,5 @@ public class Booking {
             return null;
         }
     }
+
 }

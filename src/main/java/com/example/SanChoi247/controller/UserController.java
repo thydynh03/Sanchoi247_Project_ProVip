@@ -2,11 +2,15 @@ package com.example.SanChoi247.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.SanChoi247.model.entity.Booking;
 import com.example.SanChoi247.model.entity.User;
+import com.example.SanChoi247.model.repo.BookingRepo;
+import com.example.SanChoi247.model.repo.LoginRepo;
 import com.example.SanChoi247.model.repo.UserRepo;
 
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +22,12 @@ import java.util.ArrayList;
 public class UserController {
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    LoginRepo loginRepo;
+    @Autowired
+    BookingRepo bookingRepo;
 
     // @GetMapping("/ShowEditProfile")
     // public String showOrderByUserId(HttpSession httpSession, Model model) throws
@@ -133,7 +143,7 @@ public class UserController {
             // Add success message to model
             model.addAttribute("message", "Edited successfully!");
 
-            return "user/editProfile"; // Return to the edit profile page
+            return "redirect:/ShowEditProfile"; // Return to the edit profile page
 
         } catch (Exception e) {
             // In case of any exception, add an error message to the model
@@ -159,15 +169,17 @@ public class UserController {
         try {
             User user = (User) session.getAttribute("UserAfterLogin");
 
-            // Kiểm tra xem mật khẩu cũ có đúng không
-            if (!user.getPassword().equals(oldPassword)) {
+            // Kiểm tra mật khẩu cũ với repository
+            if (!loginRepo.checkOldPassword(user.getUid(), oldPassword)) {
                 model.addAttribute("error", "Old password is incorrect.");
             } else if (newPassword.equals(oldPassword)) {
                 model.addAttribute("error", "New password cannot be the same as the old password.");
             } else if (!newPassword.equals(confirmPassword)) {
                 model.addAttribute("error", "New password and confirm password do not match.");
             } else {
-                userRepo.updatePassword(user.getUid(), newPassword);
+                // Mã hóa mật khẩu mới trước khi cập nhật vào cơ sở dữ liệu
+                String encodedNewPassword = passwordEncoder.encode(newPassword);
+                userRepo.updatePassword(user.getUid(), encodedNewPassword);
                 model.addAttribute("message", "Password updated successfully!");
                 return "redirect:/Logout"; // Chuyển hướng sau khi thay đổi thành công
             }
@@ -190,5 +202,5 @@ public class UserController {
     }
 
     // ---------------------------------------------------------------------------------//
-    
+
 }

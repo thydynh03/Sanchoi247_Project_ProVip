@@ -1,17 +1,64 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banned</title>
+    <title>Account Banned</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .banned-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .banned-container h1 {
+            color: #dc3545;
+        }
+        .banned-container p {
+            font-size: 16px;
+            color: #333;
+        }
+        .banned-container .support-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .banned-container .support-link:hover {
+            text-decoration: underline;
+        }
+        .banned-container .logout-button {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        .banned-container .logout-button:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
-    <div class="container"></div>
-        <h1>Account Banned</h1>
-        <p>Dear User,</p>
-        <p>Your account has been <strong style="color: #dc3545;">banned</strong> due to violation of our terms of service.</p>
-        <p>If you believe this is a mistake, please contact our support team at <a href="mailto:support@vinhticket.com" style="color: #007bff; text-decoration: none;">support@vinhticket.com</a>.</p>
-        <p>Click the button below to log out.</p>
-        <a th:href="@{/Logout}" class="logout-button">Log Out</a>
+    <div class="container">
+        <div class="banned-container text-center">
+            <h1>Account Banned</h1>
+            <p>Dear User,</p>
+            <p>Your account has been <strong style="color: #dc3545;">banned</strong> due to violation of our terms of service.</p>
+            <p>If you believe this is a mistake, please contact our support team at <a href="mailto:247sanchoi@gmail.com" class="support-link">247sanchoi@gmail.com</a>.</p>
+            <p>Click the button below to log out.</p>
+            <a th:href="@{/Logout}" class="logout-button">Log Out</a>
+        </div>
     </div>
 </body>
 </html>

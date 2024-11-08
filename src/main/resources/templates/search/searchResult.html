@@ -1,60 +1,16 @@
 <!-- search-result.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SanChoi247 - Kết quả tìm kiếm</title>
+    <title>SanChoi247</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-        .navbar-brand img {
-            height: 60px;
-            border-radius: 50%; /* Thêm thuộc tính border-radius để làm hình tròn */
-        }
-        .navbar-brand img {
-            height: 60px;
-            width: 60px; /* Thêm thuộc tính width để giữ kích thước hình ảnh */
-            border-radius: 50%; /* Thêm thuộc tính border-radius để làm hình tròn */
-        }
-        .navbar-nav .nav-link {
-            color: #000;
-            margin: 0 10px;
-            font-size: 18px;
-            padding: 10px 20px;
-            font-weight: 600; /* Thêm thuộc tính font-weight để làm chữ đậm */
-            transition: transform 0.3s ease, color 0.3s ease; /* Thêm hiệu ứng chuyển động */
-        }
-
-        .navbar-nav .nav-link:hover {
-            transform: translateY(-5px); /* Đẩy lên 5px khi hover */
-            color: #759C83; /* Chuyển thành màu vàng khi hover */
-        }
-        .navbar-nav .nav-link {
-            color: #000;
-            margin: 0 10px;
-            font-size: 18px;
-            padding: 10px 20px;
-            transition: transform 0.3s ease; /* Thêm hiệu ứng chuyển động */
-        }
-
-        .navbar-nav .nav-link:hover {
-            transform: translateY(-5px); /* Đẩy lên 5px khi hover */
-            color: #759C83; /* Chuyển thành màu vàng khi hover */
-        }
-
-        .navbar-nav .nav-link {
-            transition: transform 0.3s ease, color 0.3s ease; /* Thêm hiệu ứng chuyển động */
-        }
-
-        .navbar-nav .nav-link:hover {
-            transform: translateY(-5px); /* Đẩy lên 5px khi hover */
-            color: #759C83; /* Chuyển thành màu vàng khi hover */
-        }
         .location-icon {
             color: #759C83; /* Màu sắc */
             margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
@@ -73,11 +29,61 @@
             margin: 0 10px;
             font-size: 18px;
             padding: 10px 20px;
+            font-weight: 500;   
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .navbar-custom {
+            background-color: #ebf0ed;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 10px 20px;
+            font-weight: 500;   
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu .dropdown-item {
+            font-size: 18px;
+            font-weight: 500;
+            color: #759C83;
+            padding: 15px 20px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1;
+            color: #759C83;
+            transform: translateY(-2px);
+        }
+
+        .dropdown-item.logout {
+            color: red;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #759C83; /* Change color on hover */
+            transform: translateY(-2px); /* Move up slightly on hover */
         }
 
         .navbar-brand img {
             height: 60px;
+            width: 60px; /* Đảm bảo chiều rộng bằng chiều cao */
+            border-radius: 50%; /* Đặt border-radius thành 50% để tạo hình tròn */
         }
+        .sports-dropdown .dropdown-menu {
+            display: none; /* Ẩn menu xổ xuống mặc định */
+        }
+
+        .sports-dropdown:hover .dropdown-menu {
+            display: block; /* Hiện menu khi rê chuột vào mục SPORTS */
+        }
+
 
         .navbar-brand {
             margin-right: auto;
@@ -93,47 +99,47 @@
             height: 40px;
             border-radius: 50%;
         }
-        .owner-section {
-            background-color: #f8f9fa;
-            padding: 40px 0;
+        /* Các tùy chọn trong dropdown */
+        .dropdown-menu .dropdown-item {
+            font-size: 18px; /* Tăng kích thước chữ */
+            font-weight: 500; /* Làm cho chữ đậm */
+            color: #333; /* Màu chữ */
+            padding: 15px 20px; /* Tăng khoảng cách padding */
         }
 
-        .owner-section h2 {
-            color: #759C83;
-            text-align: center;
-            margin-bottom: 30px;
+        /* Thay đổi khi người dùng di chuột vào */
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1; /* Màu nền khi hover */
+            color: #000; /* Màu chữ khi hover */
         }
 
-        .owner-card {
-            background-color: #ebf0ed;
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .owner-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .owner-card img {
-            width: 100%;
-            height: 200px;
+        .card img {
+            height: 265px;
             object-fit: cover;
         }
 
-        .owner-card-body {
+        .card-body {
+            background-color: #ebf0ed;
             padding: 20px;
         }
 
-        .owner-card-title {
-            color: #759C83;
+        .card-title {
+            font-size: 18px;
             font-weight: bold;
         }
 
-        .owner-card-text {
-            color: #333;
+        .card-text {
+            font-size: 14px;
+            color: #666;
         }
+
+        .banner-video-1 {
+            width: 100%;
+            height: auto;
+        }
+
         .footerComponent-footer {
+            margin-top: 15px;
             background-color: #759C83; /* Màu nền đỏ */
             color: #ffffff; /* Màu chữ trắng */
             padding: 20px 0;
@@ -197,170 +203,31 @@
             text-align: center;
             margin-top: 20px;
         }
-        .imgOwner{
-            width: 100%;
-            height: auto;
-        }
-        .owner-container {
-            position: relative;
-            display: inline-block;
-        }
 
-        .imgOwner {
-            width: 100%; /* Đặt kích thước ảnh theo ý muốn */
-            height: auto;
+        /* Thêm biểu tượng Font Awesome */
+        .fas, .fab {
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
         }
-
-        .owner-title {
-            position: absolute;
-            top: 50%; /* Đặt vị trí ở giữa theo chiều dọc */
-            left: 50%; /* Đặt vị trí ở giữa theo chiều ngang */
-            transform: translate(-50%, -50%); /* Giúp căn giữa chính xác */
-            color: white; /* Màu chữ */
-            font-size: 36px; /* Kích thước chữ */
-            font-weight: bold; /* Đậm chữ */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Tạo bóng cho chữ để dễ nhìn hơn trên nền ảnh */
-        }
-        .dropdown-menu .dropdown-item {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            padding: 15px 20px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-            .dropdown-menu .dropdown-item:hover {
-            background-color: #f1f1f1;
-            color: #000;
-        }
-
-            .dropdown-item.logout {
-            color: red;
-            font-weight: bold;
-        }
-
-            .dropdown:hover .dropdown-menu {
-            display: block;
-            margin-top: 0;
-        }
-
-            .dropdown-menu {
-            margin-top: 10px;
-            transition: margin-top 0.5s;
-        }
-        .dropdown-menu .dropdown-item {
-        font-size: 18px;
-        font-weight: bold;
-        color: #333;
-        padding: 15px 20px;
-        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-        background-color: #ebf0ed;
-        color: #000;
-        transform: translateY(-5px);
-        }
-        /* CSS cho trang kết quả tìm kiếm */
-        /* CSS cho thẻ card trong phần SPORT */
-        .sport-btn {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 20px;
-            width: 100%;
-            height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .sport-btn:hover {
-            background-color: #ebf0ed;
-            cursor: pointer;
-        }
-
-        /* CSS cho thẻ card trong phần POPULAR */
-        .card {
-            margin-bottom: 20px;
-        }
-
-        .card img {
-            height: 265px;
-            object-fit: cover;
-        }
-
-        .card-body {
-            background-color: #ebf0ed;
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .card-text {
-            font-size: 14px;
-            color: #666;
-        }
-
-        /* CSS cho thẻ card trong phần SPORT NEWS */
-        .card {
-            background-color: #ebf0ed;
-        }
-
-        .card img {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .card-text {
-            font-size: 14px;
-            color: #666;
+        .title-h1 {
+            color: #759C83;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            text-align: center;
         }
         .card {
-            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out; /* Thời gian chuyển đổi và hiệu ứng */
         }
 
-        .card img {
-            height: 200px;
-            object-fit: cover;
+        .card:hover {
+            transform: translateY(-5px); /* Di chuyển lên trên 5px khi rê chuột vào */
         }
-
-        .card-body {
-            background-color: #ebf0ed;
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .card-text {
-            font-size: 14px;
-            color: #666;
-        }
-        .banner-video-1{
-            width: 100%;
-            height: auto;
-        }
-
     </style>
 </head>
-<body>
+<body style="padding-top: 56px; background-color: #f9f9f9;">
+    <!-- Sticky Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/}">
@@ -374,24 +241,26 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/}">HOME</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle-no-caret" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SPORTS</a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">Football</a></li>
-                            <li><a class="dropdown-item" href="#">Tennis</a></li>
-                            <li><a class="dropdown-item" href="#">Pickleball</a></li>
-                            <li><a class="dropdown-item" href="#">Basketball</a></li>
-                            <li><a class="dropdown-item" href="#">Volleyball</a></li>
-                            <li><a class="dropdown-item" href="#">Table tennis</a></li>
-                            <li><a class="dropdown-item" href="#">Golf</a></li>
-                            <li><a class="dropdown-item" href="#">Badminton</a></li>
+                    <li class="nav-item dropdown sports-dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="sportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            SPORTS
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sportsDropdown">
+                            <li><a class="dropdown-item" href="#">FOOTBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">PICKLEBALL</a></li>
+                            <li><a class="dropdown-item" href="#">BASKETBALL</a></li>
+                            <li><a class="dropdown-item" href="#">VOLLEYBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TABLE TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">GOLF</a></li>
+                            <li><a class="dropdown-item" href="#">BADMINTON</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">INTRODUCTION</a>
+                        <a class="nav-link" th:href="@{/ShowIntroduction}">INTRODUCTION</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">POLICIES</a>
+                        <a class="nav-link" href="#">POLICY</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">TERMS</a>
@@ -400,10 +269,7 @@
                         <a class="nav-link" th:href="@{/ShowForOwners}">FOR OWNERS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">CONTACT</a>
-                    </li>
-                    <li th:if="${session.UserAfterLogin == null}" class="nav-item">
-                        <a class="nav-link" th:href="@{/ShowBlog}">BLOG</a>
+                        <a class="nav-link" href="#">BLOG</a>
                     </li>
                     <li th:if="${session.UserAfterLogin == null}" class="nav-item">
                         <a class="nav-link" th:href="@{/Login}" style="color: black; background-color: #759C83; border-radius: 10px;">SIGN IN</a>
@@ -415,7 +281,6 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
-                            <li><a class="dropdown-item" href="#">See Booking</a></li>
                             <li><a class="dropdown-item" href="#">Help & Support</a></li>
                             <li><a class="dropdown-item" href="#">Give Feedback</a></li>
                             <li><a class="dropdown-item" th:href="@{/Logout}" style="color: #759C83;">Log Out</a></li>
@@ -426,36 +291,37 @@
         </div>
     </nav>
 
-    <!-- Banner Video -->
-    <div class="video-container">
-        <video class="banner-video-1" autoplay loop muted playsinline>
-            <source src="https://res.cloudinary.com/dvwn7bgut/video/upload/v1728236168/3519565915-preview_ssdknu.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
     <!-- Enlarged Search Bar with Margins -->
     <div class="container mt-5 mb-5" data-aos="fade-up" data-aos-duration="1000">
-        <div class="card" style="background-color: #ebf0ed; border: none;">
+        <div class="card" style="background-color: #ebf0ed; border: none; margin-top: 110px;">
             <div class="card-body">
                 <form class="row g-3" th:action="@{/SearchSanByTenSan}" method="post">
                     <div class="col-md-3">
                         <input type="text" name="Search" class="form-control form-control-lg" placeholder="Name" aria-label="Name" style="height: 55px;">
                     </div>
                     <div class="col-md-3">
-                        <input type="text" name="Location" class="form-control form-control-lg" placeholder="Location" aria-label="Location" style="height: 55px;">
+                        <select class="form-select form-select-lg" name="Location" aria-label="Loại thể thao" style="height: 55px;">
+                            <option selected>Location</option>
+                            <option value="Hải Châu">Hải Châu</option>
+                            <option value="Liên Chiểu">Liên Chiểu</option>
+                            <option value="Ngũ Hành Sơn">Ngũ Hành Sơn</option>
+                            <option value="Sơn Trà">Sơn Trà</option>
+                            <option value="Cẩm Lệ">Cẩm Lệ</option>
+                            <option value="Thanh Khê">Thanh Khê</option>
+                            <option value="Hòa Vang">Hòa Vang</option>
+                        </select>
                     </div>
                     <div class="col-md-3">
                         <select class="form-select form-select-lg" name="SportType" aria-label="Loại thể thao" style="height: 55px;">
                             <option selected>Type</option>
-                            <option value="1">Football</option>
-                            <option value="2">Tennis</option>
-                            <option value="3">Pickleball</option>
-                            <option value="4">Basketball</option>
-                            <option value="5">Volleyball</option>
-                            <option value="6">Table Tennis</option>
-                            <option value="7">Golf</option>
-                            <option value="8">Badminton</option>
+                            <option value="Football">Football</option>
+                            <option value="Tennis">Tennis</option>
+                            <option value="Pickleball">Pickleball</option>
+                            <option value="Basketball">Basketball</option>
+                            <option value="Volleyball">Volleyball</option>
+                            <option value="Table Tennis">Table Tennis</option>
+                            <option value="Golf">Golf</option>
+                            <option value="Badminton">Badminton</option>
                         </select>
                     </div>
                     <div class="col-md-3 d-grid">
@@ -466,114 +332,113 @@
         </div>
     </div>
 
-    <div class="container mt-5">
-        <div class="card" style="background-color: #ebf0ed; border: none;">
-            <div class="card-body">
+    <div class="container">
+        <div class="title-h1">
+            <h1>SEARCH RESULTS</h1>
+        </div>
     
-                <!-- Hiển thị thông báo nếu không tìm thấy sân -->
-                <div style="background-color: #759C83; color: white;" th:if="${message}" class="alert alert-warning" role="alert">
-                    <span th:text="${message}"></span>
-                </div>
-    
-                <!-- Hiển thị danh sách sân tìm thấy -->
-                <div class="row" th:if="${userList != null}">
-                    <div th:each="San : ${userList}" class="col-md-4 mb-4">
-                        <div class="card">
-                            <div th:id="'carouselExample' + ${San.uid}" class="carousel slide card-img-top" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img th:src="${San.img_san1}" style="height: 265px;" class="d-block w-100" alt="..."/>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img th:src="${San.img_san2}" style="height: 265px;" class="d-block w-100" alt="..."/>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img th:src="${San.img_san3}" style="height: 265px;" class="d-block w-100" alt="..."/>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img th:src="${San.img_san4}" style="height: 265px;" class="d-block w-100" alt="..."/>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img th:src="${San.img_san5}" style="height: 265px;" class="d-block w-100" alt="..."/>
-                                    </div>
-                                </div>
+        <div class="row" data-aos="fade-up" data-aos-duration="1000">
+
+            <!-- Add the class `popular-item` to each card -->
+            <div th:if="${userList != null}" th:each="San : ${userList}" class="col-md-4 mb-4 popular-item">
+                <div class="card">
+                    <div th:id="'carouselExample' + ${San.uid}" class="carousel slide card-img-top" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img th:src="${San.img_san1}" style="height: 265px;" class="d-block w-100" alt="..."/>
                             </div>
-                            <div class="card-body" style="background-color: #ebf0ed;">
-                                <h5 class="card-title" th:text="${San.ten_san}">Card title</h5>
-                                <p class="card-text">
-                                    <i class="fas fa-map-marker-alt location-icon"></i>
-                                    <span th:text="${San.address}">Address here</span>
-                                </p>
-                                <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn" style="background-color: #759C83; color: white; border: none;">View</a>
+                            <div class="carousel-item">
+                                <img th:src="${San.img_san2}" style="height: 265px;" class="d-block w-100" alt="..."/>
+                            </div>
+                            <div class="carousel-item">
+                                <img th:src="${San.img_san3}" style="height: 265px;" class="d-block w-100" alt="..."/>
+                            </div>
+                            <div class="carousel-item">
+                                <img th:src="${San.img_san4}" style="height: 265px;" class="d-block w-100" alt="..."/>
+                            </div>
+                            <div class="carousel-item">
+                                <img th:src="${San.img_san5}" style="height: 265px;" class="d-block w-100" alt="..."/>
                             </div>
                         </div>
                     </div>
+                    <div class="card-body" style="background-color: #ebf0ed;">
+                        <h5 class="card-title" th:text="${San.ten_san}">Card title</h5>
+                        <p class="card-text">
+                            <i class="fas fa-map-marker-alt location-icon"></i>
+                            <span th:text="${San.address}">Address here</span>
+                        </p>
+                        <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn" style="background-color: #759C83; color: white; border: none;">View</a>
+                    </div>
                 </div>
-    
+            </div>
+            
+            <!-- Hiển thị thông báo nếu không tìm thấy sân -->
+            <div th:if="${userList == null || userList.isEmpty()}" class="col-12">
+                <div class="alert alert-warning" style="background-color: #759C83; color: white;">
+                    No results found for your search.
+                </div>
             </div>
         </div>
     </div>
     
-        
-
-        <footer class="footerComponent-footer">
-            <div class="footerComponent-container">
-                <div class="footerComponent-row">
-                    <div class="footerComponent-col">
-                        <h5 class="footerComponent-title">CONTACT US</h5>
-                        <ul>
-                            <li><i class="fas fa-map-marker-alt"></i> Khu đô thị FPT City, Ngũ Hành Sơn, Đà Nẵng, Việt Nam</li>
-                            <li><i class="fas fa-phone"></i> 0987 689 426</li>
-                            <li><i class="fas fa-envelope"></i>anndb1930@gmail.com</li>
-                            <li><i class="fab fa-facebook"></i> <a href="https://www.facebook.com/profile.php?id=100023316487779" target="_blank">Facebook</a></li>
-                            <li><i class="fas fa-comment"></i> <a href="https://zalo.me/0829508327" target="_blank">Zalo</a></li>
-                        </ul>
-                    </div>
-                    <div class="footerComponent-col">
-                        <h5 class="footerComponent-title">QUICK LINKS</h5>
-                        <ul>
-                            <li><a class="nav-item" href="#" onclick="scrollToTop(); return false;">Home</a></li>
-                            <li><a href="#football">Football</a></li>
-                            <li><a href="#tennis">Tennis</a></li>
-                            <li><a href="#pickleball">Pickleball</a></li>
-                            <li><a href="#basketball">Basketball</a></li>
-                            <li><a href="#volleyball">Volleyball</a></li>
-                            <li><a href="#table-tennis">Table Tennis</a></li>
-                            <li><a href="#golf">Golf</a></li>
-                            <li><a href="#badminton">Badminton</a></li>
-                        </ul>
-                    </div>
-                    <div class="footerComponent-col">
-                        <h5 class="footerComponent-title">BENEFITS</h5>
-                        <ul>
-                            <li>Online Booking</li>
-                            <li>Quickly</li>
-                            <li>Good Price</li>
-                            <li>Convenient</li>
-                        </ul>
-                    </div>
-                    <div class="footerComponent-col">
-                        <h5></h5>
-                        <div class="map-container">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.999999999999!2d108.2583164!3d15.968891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142116949840599:0x365b35580f52e8d5!2zREkgR8OgbmggRk9PVCBEdW5n!5e0!3m2!1svi!2s!4v1600000000000!5m2!1svi!2s" 
-                            width="400px" height="300px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                        </div>
+    <footer class="footerComponent-footer">
+        <div class="footerComponent-container">
+            <div class="footerComponent-row">
+                <div class="footerComponent-col">
+                    <h5 class="footerComponent-title">CONTACT US</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Khu đô thị FPT City, Ngũ Hành Sơn, Đà Nẵng, Việt Nam</li>
+                        <li><i class="fas fa-phone"></i> 0987 689 426</li>
+                        <li><i class="fas fa-envelope"></i>anndb1930@gmail.com</li>
+                        <li><i class="fab fa-facebook"></i> <a href="https://www.facebook.com/profile.php?id=100023316487779" target="_blank">Facebook</a></li>
+                        <li><i class="fas fa-comment"></i> <a href="https://zalo.me/0829508327" target="_blank">Zalo</a></li>
+                    </ul>
+                </div>
+                <div class="footerComponent-col">
+                    <h5 class="footerComponent-title">QUICK LINKS</h5>
+                    <ul>
+                        <li><a class="nav-item" href="#" onclick="scrollToTop(); return false;">Home</a></li>
+                        <li><a href="#football">Football</a></li>
+                        <li><a href="#tennis">Tennis</a></li>
+                        <li><a href="#pickleball">Pickleball</a></li>
+                        <li><a href="#basketball">Basketball</a></li>
+                        <li><a href="#volleyball">Volleyball</a></li>
+                        <li><a href="#table-tennis">Table Tennis</a></li>
+                        <li><a href="#golf">Golf</a></li>
+                        <li><a href="#badminton">Badminton</a></li>
+                    </ul>
+                </div>
+                <div class="footerComponent-col">
+                    <h5 class="footerComponent-title">BENEFITS</h5>
+                    <ul>
+                        <li>Online Booking</li>
+                        <li>Quickly</li>
+                        <li>Good Price</li>
+                        <li>Convenient</li>
+                    </ul>
+                </div>
+                <div class="footerComponent-col">
+                    <h5></h5>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.999999999999!2d108.2583164!3d15.968891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142116949840599:0x365b35580f52e8d5!2zREkgR8OgbmggRk9PVCBEdW5n!5e0!3m2!1svi!2s!4v1600000000000!5m2!1svi!2s" 
+                        width="400px" height="300px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
-            <div class="footerComponent-text-center">
-                <p>SanChoi247 © 2024 - Made by Nguyễn Đình Bảo Ân</p>
-            </div>
-        </footer>
-    
-        <div class="map">
-            <!-- Bạn có thể chèn Google Map hoặc hình ảnh ở đây -->
         </div>
-    
-        <!-- Copyright -->
-        <div class="copyright">
-            SanChoi247 - Made by Nguyễn Đình Bảo Ân 
+        <div class="footerComponent-text-center">
+            <p>SanChoi247 © 2024 - Made by Nguyễn Đình Bảo Ân</p>
         </div>
+    </footer>
+    <!-- Bản đồ -->
+    <div class="map">
+        <!-- Bạn có thể chèn Google Map hoặc hình ảnh ở đây -->
+    </div>
+
+    <!-- Copyright -->
+    <div class="copyright">
+        SanChoi247 - Made by Nguyễn Đình Bảo Ân 
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,13 +31,15 @@ public class LoginController {
     UserRepo userRepo;
     @Autowired
     LoginRepo loginRepo;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     public String ShowIndex(Model model, HttpServletRequest httpServletRequest) throws Exception {
         ArrayList<User> sanList = userRepo.getAllUser();
         ArrayList<User> Owner = new ArrayList<>();
         for (User user : sanList) {
-            if (user.getRole() == 'C') {
+            if (user.getRole() == 'C' && user.getStatus() == 4) {
                 Owner.add(user);
             }
         }
@@ -60,13 +63,32 @@ public class LoginController {
     public String LoginToSystem(@RequestParam("username") String username, @RequestParam("password") String password,
             HttpSession httpSession, Model model) throws Exception {
         User user = loginRepo.checkLogin(username, password);
+
         if (user == null) {
-            model.addAttribute("error", "Invalid username or password");
+            model.addAttribute("error", "Invalid login, please try again");
             return "auth/login";
-        } else {
-            httpSession.setAttribute("UserAfterLogin", user);
-            return "redirect:/";
         }
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            model.addAttribute("error", "Invalid login, please try again");
+            return "auth/login";
+        }
+
+        httpSession.setAttribute("UserAfterLogin", user);
+
+        String redirect = (String) httpSession.getAttribute("redirect");
+        if (redirect != null) {
+            httpSession.removeAttribute("redirect");
+            return "redirect:" + redirect;
+        }
+        if (user.getRole() == 'A') {
+            return "redirect:/admin/dashboard";
+        }
+        if (user.getRole() == 'p' || user.getRole() == 'b') {
+            return "auth/banned";
+        }
+        
+        return "redirect:/";
     }
 
     // ---------------------------------------------------------------------------//
