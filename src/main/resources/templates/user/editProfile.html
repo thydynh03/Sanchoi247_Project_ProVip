@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Edit Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/djcowpoua/image/upload/v1716277138/5E9B944E-8D69-4D6B-AF10-93526CF88EAA_invhvi.png">
+    <style>
+        body {
+            color: #EBF0ED;
+            background-color: #3B724E;
+            background-image: url('https://img.freepik.com/premium-photo/football-stadium-night-with-light-no-people_267300-274.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .form-change {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .navbar-custom {
+            background-color: #4E805F;
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link,
+        .navbar-custom .dropdown-item {
+            color: #EBF0ED;
+        }
+
+        .navbar-custom .navbar-brand:hover,
+        .navbar-custom .nav-link:hover,
+        .navbar-custom .dropdown-item:hover {
+            color: #C4D4C9;
+        }
+
+        .form-control {
+            background-color: #EBF0ED;
+            border-color: #3B724E;
+            color: #3B724E;
+        }
+
+        .form-control::placeholder {
+            color: #9DB8A6;
+        }
+
+        .btn-outline-secondary {
+            color: #EBF0ED;
+            border-color: #628E71;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #628E71;
+            color: #EBF0ED;
+        }
+
+        .btn-secondary {
+            color: #EBF0ED;
+            background-color: #628E71;
+            border-color: #628E71;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4E805F;
+            border-color: #4E805F;
+        }
+
+        .btn-primary {
+            background-color: #628E71;
+            border-color: #628E71;
+        }
+
+        .btn-primary:hover {
+            background-color: #4E805F;
+            border-color: #4E805F;
+        }
+
+        .dropdown-menu {
+            background-color: #628E71;
+        }
+
+        .dropdown-menu .dropdown-item {
+            color: #EBF0ED;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #4E805F;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            box-shadow: 0 0 20px rgba(75, 112, 78, 0.5);
+        }
+
+        .loading-spinner {
+            display: none;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .loading-spinner::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3B724E;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .form-label {
+            color: #EBF0ED;
+            font-weight: 500;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5em;
+            display: inline-block;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .form-label::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background-color: #EBF0ED;
+            transition: width 0.3s ease;
+        }
+
+        .form-label:hover::after {
+            width: 100%;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group-text {
+            background-color: #628E71;
+            color: #EBF0ED;
+            border: none;
+        }
+
+        .input-group-text:hover {
+            background-color: #4E805F;
+        }
+
+        .form-control:focus {
+            border-color: #628E71;
+            box-shadow: 0 0 5px rgba(75, 112, 78, 0.5);
+        }
+
+        .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(75, 112, 78, 0.25);
+        }
+
+        .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(75, 112, 78, 0.5);
+        }
+
+        .btn-secondary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(75, 112, 78, 0.5);
+        }
+
+        .btn-outline-secondary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(75, 112, 78, 0.5);
+        }
+
+        .text-end {
+            margin-top: 1.5rem;
+        }
+
+        h2 {
+            color: #C4D4C9;
+            text-shadow: 0px 0px 10px #C4D4C9, 0px 0px 20px #C4D4C9, 0px 0px 40px #C4D4C9;
+            animation: textFadeIn 1s ease-in-out;
+        }
+
+        @keyframes textFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row form-change">
+            <!-- Profile Editing Section -->
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="/" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+                <div id="successMessage" style="display: none; color: green;">Profile updated successfully!</div>
+
+                <form id="editProfileForm" class="form" th:action="@{/EditProfile}" method="post" onsubmit="return validateForm()">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input name="name" class="form-control" id="name" type="text" required
+                                   placeholder="Nhập tên của bạn ở đây..." th:value="${session.UserAfterLogin.name}">
+                        </div>
+                        <div id="nameError" style="color: red; font-size: 14px;"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dob" class="form-label">Date of Birth:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            <input name="dob" id="dob" class="form-control" type="date" required
+                                   th:value="${session.UserAfterLogin.dob}">
+                        </div>
+                        <div id="dobError" style="color: red; font-size: 14px;"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                            <select class="form-control" name="gender" required>
+                                <option th:value="${session.UserAfterLogin.gender}" th:text="${session.UserAfterLogin.gender}">Select Gender</option> 
+                                <option th:value="M">Male</option>
+                                <option th:value="F">Female</option>
+                                <option th:value="O">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            <input name="phone" id="phone" class="form-control" type="text" maxlength="10" required
+                                   th:value="${session.UserAfterLogin.phone}">
+                        </div>
+                        <div id="phoneError" style="color: red; font-size: 14px;"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input name="email" id="email" class="form-control" type="email" required
+                                   th:value="${session.UserAfterLogin.email}">
+                        </div>
+                        <div id="emailError" style="color: red; font-size: 14px;"></div>
+                    </div>
+                
+
+                    <div th:if="${session.UserAfterLogin.role.toString() == 'C'}">
+                        <div class="mb-3">
+                            <label for="ten_san" class="form-label">Stadium name:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                                <input name="ten_san" class="form-control" id="ten_san" type="text" required
+                                    placeholder="Enter the stadium name"
+                                    th:value="${session.UserAfterLogin.ten_san}">
+                            </div>
+                        </div>
+            
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                <input name="address" class="form-control" id="address" type="text"
+                                    placeholder="Enter the address" th:value="${session.UserAfterLogin.address}">
+                            </div>
+                        </div>
+
+                        <div>
+                            <div>
+                                <label for="img_san1" class="form-label">Image Stadium 1:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san1}}" alt="Img_san1">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        
+                
+                            <div>
+                                <label for="img_san2" class="form-label">Image Stadium 2:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san2}}" alt="Img_san2">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        
+                          
+                            <div>
+                                <label for="img_san3" class="form-label">Image Stadium 3:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san3}}" alt="Img_san3">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+             
+                            <div>
+                                <label for="img_san4" class="form-label">Image Stadium 4:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san4}}" alt="Img_san4">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        
+                            
+                            <div>
+                                <label for="img_san5" class="form-label">Image Stadium 5:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san5}}" alt="Img_san5">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-3">
+
+                    
+                        <div class="ms-auto">
+                            <button class="btn btn-secondary me-2" type="reset">Reset</button>
+                            <button class="btn btn-primary" type="submit">Edit <i class="fa fa-fw fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                    
+                </form>
+                                        <div class="d-inline-flex">
+                            <a th:href="@{/ShowChangePassword}" class="btn btn-outline-secondary me-2">Change Password</a>
+                            <div th:if="${session.UserAfterLogin.role.toString() == 'C'}">
+                                <a th:href="@{/ShowEditStadium}" class="btn btn-outline-secondary">Stadium</a>
+                            </div>
+                        </div>
+            </div>
+
+            <!-- Avatar and Upload Section -->
+            <div class="col-md-6 text-center">
+                <h2 class="title-h2">Upload Avatar</h2>
+                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                    <div class="mb-3 avatar-container">
+                        <img class="avatar img-fluid" th:src="@{${user.avatar}}" alt="Avatar">
+                        <div class="loading-spinner"></div>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <input type="file" class="form-control" name="image" id="imageInput"
+                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                    </div>
+                    <div class="text-center d-flex justify-content-center align-items-center">
+                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+async function handleFormSubmit(event) {
+    event.preventDefault(); // Prevent default form submission
+    const isValid = await validateForm();
+    if (isValid) {
+        document.getElementById("successMessage").style.display = "block";
+        setTimeout(() => window.location.href = "/ShowEditProfile", 1000);
+    }
+}
+
+async function validateForm() {
+    const phoneInput = document.getElementById("phone").value;
+    const dobInput = document.getElementById("dob").value;
+    const phonePattern = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
+    const dobError = document.getElementById("dobError");
+    const phoneError = document.getElementById("phoneError");
+
+    let isValid = true;
+
+    // Clear previous error messages
+    dobError.innerText = "";
+    phoneError.innerText = "";
+
+    // Validate phone format
+    if (!phonePattern.test(phoneInput)) {
+        phoneError.innerText = "Invalid phone number format.";
+        isValid = false;
+    } else {
+        // Check if phone number already exists only if format is correct
+        const phoneExists = await checkPhoneExists(phoneInput);
+        if (phoneExists) {
+            phoneError.innerText = "Phone number already exists.";
+            isValid = false;
+        }
+    }
+
+    // Validate Date of Birth - should not be a future date
+    const dobDate = new Date(dobInput);
+    const today = new Date();
+    if (dobDate > today) {
+        dobError.innerText = "Date of birth cannot be in the future.";
+        isValid = false;
+    }
+
+    return isValid; // Only submit if form is valid
+}
+
+async function checkPhoneExists(phone) {
+    try {
+        const response = await fetch(`/checkPhone?phone=${phone}`);
+        const data = await response.json();
+        return data.exists; // Assumes the server responds with { "exists": true/false }
+    } catch (error) {
+        console.error("Error checking phone number:", error);
+        return false;
+    }
+}
+            
+                // Function to show the submit button for image upload
+                function checkFile() {
+                    const fileInput = document.getElementById('imageInput');
+                    const submitButton = document.getElementById('submitButton');
+                    submitButton.style.display = fileInput.files.length > 0 ? 'block' : 'none';
+                }
+            
+                // Add a loading spinner on form submit for image upload
+                document.getElementById('uploadForm').addEventListener('submit', function (e) {
+                    e.preventDefault(); // Prevent default form submission behavior
+                    const loadingSpinner = document.querySelector('.loading-spinner');
+                    loadingSpinner.style.display = 'flex'; // Show the loading spinner
+                    e.target.submit(); // Submit the form to server
+                });
+            </script>
+            
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

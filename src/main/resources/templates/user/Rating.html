@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đánh giá sân</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Thay thế bằng đường dẫn CSS của bạn nếu cần -->
+</head>
+<body>
+    <div class="container">
+        <h2>Đánh giá sân</h2>
+        
+        <!-- Thông báo khi đã gửi đánh giá thành công -->
+        <div th:if="${message}" class="alert alert-success">
+            <p th:text="${message}"></p>
+        </div>
+
+        <!-- Form đánh giá -->
+        <form th:action="@{/booking/rate}" method="post">
+            <input type="hidden" name="bookingId" th:value="${booking.id}" />
+
+            <div class="rating">
+                <input type="radio" name="star" value="5" id="star5">
+                <label for="star5" title="Rất tốt"><i class="fas fa-star"></i></label>
+                
+                <input type="radio" name="star" value="4" id="star4">
+                <label for="star4" title="Tốt"><i class="fas fa-star"></i></label>
+                
+                <input type="radio" name="star" value="3" id="star3">
+                <label for="star3" title="Khá"><i class="fas fa-star"></i></label>
+                
+                <input type="radio" name="star" value="2" id="star2">
+                <label for="star2" title="Trung bình"><i class="fas fa-star"></i></label>
+                
+                <input type="radio" name="star" value="1" id="star1">
+                <label for="star1" title="Kém"><i class="fas fa-star"></i></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+
+    <style>
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .rating {
+            direction: rtl;
+            display: inline-flex;
+            margin-bottom: 20px;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 30px;
+            color: #ccc;
+            cursor: pointer;
+            padding: 0 5px;
+            transition: color 0.3s;
+        }
+
+        .rating input:checked ~ label,
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: #ffc107; /* Màu vàng cho sao */
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            margin-top: 20px;
+            color: #155724;
+            background-color: #d4edda;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+    </style>
+</body>
+</html>

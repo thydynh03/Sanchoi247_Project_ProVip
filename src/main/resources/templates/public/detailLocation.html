@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sân</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        .location-icon {
+            color: #759C83; /* Màu sắc */
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+            vertical-align: middle; /* Căn chỉnh biểu tượng với văn bản */
+            font-size: 1.2em; /* Kích thước biểu tượng */
+        }
+
+
+        .navbar-custom {
+            background-color: #ebf0ed;
+            padding: 20px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 10px 20px;
+            font-weight: 500;   
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .navbar-custom {
+            background-color: #ebf0ed;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 10px 20px;
+            font-weight: 500;   
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu .dropdown-item {
+            font-size: 18px;
+            font-weight: 500;
+            color: #759C83;
+            padding: 15px 20px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1;
+            color: #759C83;
+            transform: translateY(-2px);
+        }
+
+        .dropdown-item.logout {
+            color: red;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #759C83; /* Change color on hover */
+            transform: translateY(-2px); /* Move up slightly on hover */
+        }
+
+        .navbar-brand img {
+            height: 60px;
+            width: 60px; /* Đảm bảo chiều rộng bằng chiều cao */
+            border-radius: 50%; /* Đặt border-radius thành 50% để tạo hình tròn */
+        }
+        .sports-dropdown .dropdown-menu {
+            display: none; /* Ẩn menu xổ xuống mặc định */
+        }
+
+        .sports-dropdown:hover .dropdown-menu {
+            display: block; /* Hiện menu khi rê chuột vào mục SPORTS */
+        }
+
+
+        .navbar-brand {
+            margin-right: auto;
+        }
+
+        .navbar-toggler {
+            border-color: #000;
+            padding: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        /* Các tùy chọn trong dropdown */
+        .dropdown-menu .dropdown-item {
+            font-size: 18px; /* Tăng kích thước chữ */
+            font-weight: 500; /* Làm cho chữ đậm */
+            color: #333; /* Màu chữ */
+            padding: 15px 20px; /* Tăng khoảng cách padding */
+        }
+
+        /* Thay đổi khi người dùng di chuột vào */
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1; /* Màu nền khi hover */
+            color: #000; /* Màu chữ khi hover */
+        }
+
+        /* Tùy chọn thêm màu sắc đặc biệt cho nút đăng xuất */
+        .dropdown-item.logout {
+            color: red; /* Làm cho chữ đăng xuất có màu đỏ */
+            font-weight: bold; /* Tăng độ đậm chữ */
+        }
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .container h1,
+        h2 {
+            font-weight: bold;
+            color: #759C83;
+        }
+
+        .card-title {
+            color: #759C83;
+            font-size: 1.5rem;
+        }
+
+        .card-text {
+            color: black;
+            font-size: 1.1rem;
+        }
+
+        .table thead th {
+            background-color: #759C83;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table tbody tr {
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f2f3f7;
+        }
+
+        .btn-book {
+            background-color: #759C83;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-book:hover {
+            background-color:#759C83;
+        }
+
+        .btn-edit {
+            background-color: #759C83;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            background-color: #759C83;
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .form-group label {
+            font-size: 1.2rem;
+            color: black;
+        }
+    </style>
+</head>
+
+<body style="padding-top: 95px; background-color: #f9f9f9;">
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">
+                <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728240612/nptm9pv1ifhzdrogjfk8.webp" alt="Logo"> <!-- Replace with your logo URL -->
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">HOME</a>
+                    </li>
+                    <li class="nav-item dropdown sports-dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="sportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            SPORTS
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sportsDropdown">
+                            <li><a class="dropdown-item" href="#">FOOTBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">PICKLEBALL</a></li>
+                            <li><a class="dropdown-item" href="#">BASKETBALL</a></li>
+                            <li><a class="dropdown-item" href="#">VOLLEYBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TABLE TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">GOLF</a></li>
+                            <li><a class="dropdown-item" href="#">BADMINTON</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/ShowIntroduction}">INTRODUCTION</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">POLICY</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">TERMS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/ShowForOwners}">FOR OWNERS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">BLOG</a>
+                    </li>
+                    <li th:if="${session.UserAfterLogin == null}" class="nav-item">
+                        <a class="nav-link" th:href="@{/Login}" style="color: black; background-color: #759C83; border-radius: 10px;">SIGN IN</a>
+                    </li>
+                    <!-- User avatar and dropdown -->
+                    <li th:if="${session.UserAfterLogin != null}" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img th:src="${session.UserAfterLogin.avatar}" alt="Avatar" class="avatar"> <!-- Avatar from session -->
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role.toString == 'A'}">
+                                <a class="dropdown-item" th:href="@{/admin/dashboard}">Dashboard</a>
+                            </li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role.toString == 'C'}">
+                                <a class="dropdown-item" th:href="@{/admin/dashboard}">See Stadium</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/ShowBookingByUserId}">See Booking</a></li>
+                            <li><a class="dropdown-item" th:href="@{/ShowHelp&Support}">Help & Support</a></li>
+                            <li><a class="dropdown-item" th:href="@{/ShowGiveFeedback}">Give Feedback</a></li>
+                            <li><a class="dropdown-item" th:href="@{/Logout}" style="color: #759C83;">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4" style="color: #759C83; margin-top: 30px; margin-bottom: 30px;text-align: center;">Chi tiết sân</h1>
+
+        <!-- Hiển thị chi tiết sân -->
+        <div class="card mb-5 p-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="card-title"><span th:text="${SanDetail.User.ten_san}"></span></h4>
+                    <h4 class="card-text">Type Sport: <span th:text="${SanDetail.loaiSan.loai_san_type}"></span></h4>
+                    <h4 class="card-text">Size: <span th:text="${SanDetail.size.size}"></span></h4>
+                    <h4 class="card-text">Location: <span th:text="${SanDetail.vi_tri_san}"></span></h4>
+                    <h4 class="card-text">Owner: <span th:text="${SanDetail.User.name}"></span></h4>
+                    <h4 class="card-text">Phone: <span th:text="${SanDetail.User.phone}"></span></h4>
+                    <h4 class="card-text">Email: <span th:text="${SanDetail.User.email}"></span></h4>
+                    <h4 class="card-text">Address: <span th:text="${SanDetail.User.address}"></span></h4>
+                </div>
+                <div class="col-md-6">
+                    <img th:src="@{${SanDetail.img}}" alt="Image of San" class="img-fluid rounded" style="width: 100%; height: 300px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Chọn ngày -->
+        <div class="form-group">
+            <label for="bookingDate">Chọn ngày</label>
+            <input type="date" id="bookingDate" class="form-control" onchange="updateBookings()" min="" />
+        </div>
+
+        <!-- Hiển thị danh sách các booking -->
+        <h1 class="text-center my-4">Danh sách khung giờ đặt sân</h1>
+        <table class="table table-bordered table-hover table-striped" id="timeSlotsTable">
+            <thead>
+                <tr>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Trạng thái</th>
+                    <th>Giá</th>
+                    <th>Booking</th>
+                    <th th:if="${session.UserAfterLogin != null && (session.UserAfterLogin.uid == SanDetail.user.uid)}">
+                        Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="booking : ${bookings}">
+                    <!-- <td th:text="${#temporals.format(booking.start_time, 'HH:mm')}"></td>
+                    <td th:text="${#temporals.format(booking.end_time, 'HH:mm')}"></td>
+                    <td th:text="${booking.status}"></td>
+                    <td th:text="${booking.price}"></td>
+                    <td>
+                        <button class="btn btn-book">Book</button>
+                    </td>
+                    <td th:if="${session.UserAfterLogin != null && (session.UserAfterLogin.uid == SanDetail.user.uid)}">
+                        <button class="btn btn-edit">Edit</button>
+                    </td> -->
+                </tr>
+            </tbody>
+        </table>
+
+        <h1 id="user_idsan_check" hidden style="color: aqua;" th:text="${SanDetail.user.uid}"></h1>
+        <h1 id="user_id_check" hidden style="color: red;" th:if="${session.UserAfterLogin != null}" th:text="${session.UserAfterLogin.uid}"></h1>
+        <h1 id="san_id_check" hidden th:text="${SanDetail.san_id}"></h1>
+        <h1 id="session_check" hidden th:text="${session.UserAfterLogin != null ? 'true' : 'false'}"></h1>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Set the min attribute to today's date
+            const today = new Date().toISOString().split("T")[0];
+            document.getElementById("bookingDate").setAttribute("min", today);
+        });
+    
+        function updateBookings() {
+            const selectedDate = document.getElementById("bookingDate").value;
+            const today = new Date().toISOString().split("T")[0];
+    
+            if (selectedDate < today) {
+                alert("Không thể chọn ngày trong quá khứ. Vui lòng chọn ngày hợp lệ.");
+                document.getElementById("bookingDate").value = today;
+                return;
+            }
+    
+            const sanId = document.getElementById("san_id_check").textContent;
+            const sanDetailUser = document.getElementById("user_idsan_check").textContent;
+            const session = document.getElementById("session_check").textContent === 'true';
+            const sessionUser = session ? document.getElementById("user_id_check").textContent : null;
+    
+            if (selectedDate) {
+                fetch(`/getBookingsByDate?sanId=${sanId}&bookingDate=${selectedDate}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const tableBody = document.getElementById("timeSlotsTable").querySelector("tbody");
+                        tableBody.innerHTML = "";
+    
+                        const currentTime = new Date();
+    
+                        data.forEach(booking => {
+                            let bookLink = '';
+                            let editLink = '';
+    
+                            const bookingStartTime = new Date(`${selectedDate}T${booking.start_time}`);
+    
+                            if (booking.status === "available" && bookingStartTime > currentTime) {
+                                bookLink = `<form action="/bookSan" method="post">
+                                    <input type="hidden" name="bookingId" value="${booking.booking_id}" />
+                                    <button type="submit">Book</button>
+                                </form>`;
+                            }
+    
+                            if (sessionUser === sanDetailUser) {
+                                editLink = `<a href="/editBooking/${booking.booking_id}">Edit</a>`;
+                            }
+    
+                            const row = `<tr>
+                                <td>${booking.start_time}</td>
+                                <td>${booking.end_time}</td>
+                                <td>${booking.status}</td>
+                                <td>${booking.price}</td>
+                                <td>${bookLink}</td>
+                                <td>${editLink}</td>
+                            </tr>`;
+                            tableBody.innerHTML += row;
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching bookings:', error);
+                        alert("Có lỗi xảy ra khi tải danh sách booking. Vui lòng thử lại sau.");
+                    });
+            }
+        }
+    </script>
+    
+     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SanChoi247</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+                .then(editor => {
+                    // Update the hidden textarea with the editor content
+                    document.querySelector('form').addEventListener('submit', function () {
+                        document.querySelector('#hiddenDescription').value = editor.getData();
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+            const sendEmailButtons = document.querySelectorAll('.mail'); // Chọn tất cả các nút "Send Email" với class "mail"
+
+            sendEmailButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const card = button.closest('.card'); // Lấy thẻ card chứa nút được nhấp vào
+                    const email = card.querySelector('.card-text span:nth-of-type(5)').textContent.trim(); // Lấy email từ thẻ span thứ 5 trong thẻ card
+
+                    // Đặt email vào input của modal
+                    const emailInput = document.getElementById('requestEmails');
+                    emailInput.value = email;
+                });
+            });
+        });
+    </script>
+    <style>
+        .card-columns {
+            column-count: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <a th:href="@{admin/dashboard}" class="btn btn-primary">Back to Dashboard</a>
+        <h1 class="mb-4">Request Refund Booking List</h1>
+        <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search for username...">
+        <div id="userCards" class="card-columns">
+            <div th:each="request : ${booking}" class="card" th:data-user="${request.user.username.toLowerCase()}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${request.user.name}"></h5>
+                    <p class="card-text">
+                        <strong>Username:</strong> <span th:text="${request.user.username}"></span><br>
+                        <strong>Phone:</strong> <span th:text="${request.user.phone}"></span><br>
+                        <strong>Date of Booking:</strong> <span th:text="${request.date}"></span><br>
+                        <strong>Price:</strong> <span th:text="${request.totalprice}"></span><br>
+                        <strong>Email:</strong> <span th:text="${request.user.email}"></span><br>
+                        <strong>San Location:</strong> <span th:text="${request.san.vi_tri_san}"></span><br>
+                        <strong>Type:</strong> <span th:text="${request.san.loaiSan.loai_san_type}"></span><br>
+                        <strong>Start Time:</strong> <span th:text="${request.scheduleBooking.start_time}"></span><br>
+                        <strong>End Time:</strong> <span th:text="${request.scheduleBooking.end_time}"></span><br>
+                        <br>
+                    </p>
+                    <form id="request" th:action="@{/ApproveRequestRefundByAdmin}" method="post" class="d-inline-block">
+                        <input type="hidden" name="booking_id" th:value="${request.booking_id}" />
+                        <input type="hidden" name="status" th:value="${request.status}" />
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                    
+                    <form id="request" th:action="@{/RejectRequestOwner}" method="post" class="d-inline-block">
+                        <input type="hidden" name="booking_id" th:value="${request.booking_id}" />
+                        <input type="hidden" name="status" th:value="${request.status}" />
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    </form>
+                    
+                    <!-- <button id="request" class="btn btn-primary mail d-inline-block" data-bs-toggle="modal" data-bs-target="#sendInfoModal">Send Email</button> -->
+                                        
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="sendInfoModal" tabindex="-1" aria-labelledby="sendInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/sendMailToActiveOwner}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="sendInfoModalLabel">Gửi thông tin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="Title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Content</label>
+                            <textarea id="editor"></textarea>
+                            <input type="hidden" id="hiddenDescription" name="content">
+                        </div>
+                        <input type="" id="ownerEmails" name="ownerEmails">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function () {
+            let filter = this.value.toLowerCase();
+            let cards = document.querySelectorAll('#userCards .card');
+
+            cards.forEach(card => {
+                let user = card.getAttribute('data-user');
+                if (user.includes(filter)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

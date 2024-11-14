@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+    <script src="/tinymce/tinymce.min.js"></script>
+    <script src="/js/tinymceConfig.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Edit Your Post</h2>
+        <form action="/posts/update" method="post">
+            <input type="hidden" name="postId" th:value="${post.id}" />
+            
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" id="title" name="title" class="form-control" th:value="${post.title}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Content:</label>
+                <textarea id="content" name="content" class="form-control" rows="10" th:text="${post.content}"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+
+    <!-- Cấu hình TinyMCE -->
+    <script>
+        tinymce.init({
+            selector: '#content',
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save(); // Lưu nội dung vào textarea trước khi gửi form
+                });
+            },
+            height: 300,
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+        });
+    </script>
+</body>
+</html>
